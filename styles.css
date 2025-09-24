@@ -1,0 +1,33 @@
+/* Minimal reset */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  color: #111;
+  background: #f7f7f8;
+}
+
+/* Layout helpers */
+.container { max-width: 860px; margin: 0 auto; padding: 24px; }
+.muted { color: #555; }
+
+/* Card */
+.card {
+  background: #fff;
+  border: 1px solid #e7e7ea;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+/* Button */
+button {
+  cursor: pointer;
+  border: 1px solid #e0e0e5;
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+button:hover { background: #f3f3f6; }
