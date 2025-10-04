@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Phillip Han Trivia</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/trivia.css">
+</head>
+<body>
+  <main>
+    <h1>Phillip Han Trivia</h1>
+    <p class="muted">Get them all right to reveal the access code for the letter.</p>
+
+    <form id="triviaForm" novalidate>
+      <!-- 1 -->
+      <fieldset>
+        <legend>1. How many things is Phillip allergic to?</legend>
+        <div class="row">
+          <label for="q1">Enter number</label>
+          <input id="q1" type="number" inputmode="numeric" min="0" step="1" required>
+        </div>
+        <div class="help">Remember I asked you this?</div>
+      </fieldset>
+
+      <!-- 2 -->
+      <fieldset>
+        <legend>2. How tall is Phillip?</legend>
+        <div class="row">
+          <label for="q2">In cm</label>
+          <input id="q2" type="number" inputmode="numeric" min="0" step="1" placeholder="e.g., 175, 190, 180" required>
+        </div>
+      </fieldset>
+
+      <!-- 3 -->
+      <fieldset>
+        <legend>3. What color are his headphones?</legend>
+        <div class="row">
+          <label for="q3">Type color</label>
+          <input id="q3" type="text" placeholder="e.g., black, blue, white" required>
+        </div>
+      </fieldset>
+
+      <!-- 4 -->
+      <fieldset>
+        <legend>4. How many cousins does Phillip have?</legend>
+        <div class="row">
+          <label for="q4">Enter number</label>
+          <input id="q4" type="number" inputmode="numeric" min="0" step="1" required>
+        </div>
+        <div class="help">Just my close cousins.</div>
+      </fieldset>
+
+      <!-- 5 -->
+      <fieldset>
+        <legend>5. What iPhone model does Phillip own?</legend>
+        <div class="row">
+          <label for="q5">Type model</label>
+          <input id="q5" type="text" placeholder="e.g., iPhone 16" required>
+        </div>
+        <div class="help">BUY ME NEW IPHONE</div>
+      </fieldset>
+
+      <!-- 6 -->
+      <fieldset>
+        <legend>6. Who is Phillip’s favorite composer?</legend>
+        <div class="row">
+          <label for="q6">Type name</label>
+          <input id="q6" type="text" placeholder="e.g., Debussy" required>
+        </div>
+        <div class="help">the goat himself</div>
+      </fieldset>
+
+      <!-- 7 -->
+      <fieldset>
+        <legend>7. What is Phillip’s favorite fruit?</legend>
+        <div class="row">
+          <label for="q7">Type fruit</label>
+          <input id="q7" type="text" placeholder="e.g., Peach" required>
+        </div>
+        <div class="help"><sup>*</sup>currently</div>
+      </fieldset>
+
+      <!-- 8 -->
+      <fieldset>
+        <legend>8. What time was Phillip born?</legend>
+        <div class="row">
+            <label for="q8">Enter time</label>
+            <input id="q8" type="time" required>
+        </div>
+        </fieldset>
+
+      <!-- 9 -->
+      <fieldset>
+        <legend>9. Which League of Legends champion does Phillip main?</legend>
+        <div class="row">
+          <label for="q9">Type champion</label>
+          <input id="q9" type="text" placeholder="hint: NOT TEEMO" required>
+        </div>
+      </fieldset>
+
+      <!-- 10 -->
+      <fieldset>
+        <legend>10. Which two League roles does Phillip main? (Choose exactly 2)</legend>
+        <div class="options">
+          <label><input type="checkbox" name="q10" value="Top"> Top</label>
+          <label><input type="checkbox" name="q10" value="Jungle"> Jungle</label>
+          <label><input type="checkbox" name="q10" value="Mid"> Mid</label>
+          <label><input type="checkbox" name="q10" value="ADC"> ADC</label>
+          <label><input type="checkbox" name="q10" value="Support"> Support</label>
+        </div>
+        <div class="help">Pick exactly two.</div>
+      </fieldset>
+
+      <!-- 11 -->
+      <fieldset>
+        <legend>11. True or False: Phillip has never been stung by a bee/wasp.</legend>
+        <div class="options">
+          <label><input type="radio" name="q11" value="True" required> True</label>
+          <label><input type="radio" name="q11" value="False"> False</label>
+        </div>
+      </fieldset>
+
+      <!-- 12 -->
+      <fieldset>
+        <legend>12. Which bone has Phillip broken?</legend>
+        <div class="options">
+          <label><input type="radio" name="q12" value="thumb" required> Thumb</label>
+          <label><input type="radio" name="q12" value="index"> Index</label>
+          <label><input type="radio" name="q12" value="middle"> Middle</label>
+          <label><input type="radio" name="q12" value="ring"> Ring</label>
+          <label><input type="radio" name="q12" value="pinky"> Pinky</label>
+        </div>
+      </fieldset>
+
+      <!-- 13 -->
+      <fieldset>
+        <legend>13. What is Phillip’s record for most releases in one day?</legend>
+        <div class="row">
+          <label for="q13">Enter number</label>
+          <input id="q13" type="number" inputmode="numeric" min="0" step="1" required>
+        </div>
+      </fieldset>
+
+      <!-- 14 -->
+      <fieldset>
+        <legend>14. Final League rank reached in Korea?</legend>
+        <div class="options">
+            <label><input type="radio" name="q14" value="Iron IV" required> Iron IV</label>
+            <label><input type="radio" name="q14" value="Iron III"> Iron III</label>
+            <label><input type="radio" name="q14" value="Iron II"> Iron II</label>
+            <label><input type="radio" name="q14" value="Iron I"> Iron I</label>
+
+            <label><input type="radio" name="q14" value="Bronze IV"> Bronze IV</label>
+            <label><input type="radio" name="q14" value="Bronze III"> Bronze III</label>
+            <label><input type="radio" name="q14" value="Bronze II"> Bronze II</label>
+            <label><input type="radio" name="q14" value="Bronze I"> Bronze I</label>
+
+            <label><input type="radio" name="q14" value="Silver IV"> Silver IV</label>
+            <label><input type="radio" name="q14" value="Silver III"> Silver III</label>
+            <label><input type="radio" name="q14" value="Silver II"> Silver II</label>
+            <label><input type="radio" name="q14" value="Silver I"> Silver I</label>
+
+            <label><input type="radio" name="q14" value="Gold IV"> Gold IV</label>
+            <label><input type="radio" name="q14" value="Gold III"> Gold III</label>
+            <label><input type="radio" name="q14" value="Gold II"> Gold II</label>
+            <label><input type="radio" name="q14" value="Gold I"> Gold I</label>
+
+            <label><input type="radio" name="q14" value="Platinum IV"> Platinum IV</label>
+            <label><input type="radio" name="q14" value="Platinum III"> Platinum III</label>
+            <label><input type="radio" name="q14" value="Platinum II"> Platinum II</label>
+            <label><input type="radio" name="q14" value="Platinum I"> Platinum I</label>
+
+            <label><input type="radio" name="q14" value="Emerald IV"> Emerald IV</label>
+            <label><input type="radio" name="q14" value="Emerald III"> Emerald III</label>
+            <label><input type="radio" name="q14" value="Emerald II"> Emerald II</label>
+            <label><input type="radio" name="q14" value="Emerald I"> Emerald I</label>
+
+            <label><input type="radio" name="q14" value="Diamond IV"> Diamond IV</label>
+            <label><input type="radio" name="q14" value="Diamond III"> Diamond III</label>
+            <label><input type="radio" name="q14" value="Diamond II"> Diamond II</label>
+            <label><input type="radio" name="q14" value="Diamond I"> Diamond I</label>
+
+            <label><input type="radio" name="q14" value="Master"> Master</label>
+            <label><input type="radio" name="q14" value="Grandmaster"> Grandmaster</label>
+            <label><input type="radio" name="q14" value="Challenger"> Challenger</label>
+        </div>
+      </fieldset>
+
+      <!-- 15 -->
+      <fieldset>
+        <legend>15. When did Phillip receive his Chinese earphones from Jinny?</legend>
+        <div class="row">
+          <label for="q15">Select date</label>
+          <input id="q15" type="date" required>
+        </div>
+      </fieldset>
+
+      <!-- 16 -->
+      <fieldset>
+        <legend>16. When did Phillip and Jinny start dating?</legend>
+        <div class="row">
+          <label for="q16">Select date</label>
+          <input id="q16" type="date" required>
+        </div>
+      </fieldset>
+
+      <!-- 17 -->
+        <fieldset>
+        <legend>17. How many days has it been since Phillip and Jinny dated?</legend>
+        <div class="row">
+            <label for="q17">Enter number</label>
+            <input id="q17" type="number" inputmode="numeric" min="0" step="1" required>
+        </div>
+        <div class="help">Between might be adding a day btw because it calculates in Korea time.</div>
+        </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="primary">Check Answers</button>
+        <button type="reset">Clear</button>
+      </div>
+
+      <div id="result" class="muted"></div>
+      <div id="codeWrap">
+        Your access code is: <span id="code">prudent</span>
+        <div class="actions" style="margin-top:10px;">
+          <button type="button" id="copyBtn">Copy code</button>
+          <a href="home.html" class="muted" style="text-decoration: underline;">Back to Home</a>
+        </div>
+      </div>
+    </form>
+  </main>
+    <script src="script.js"></script>
+</body>
+</html>

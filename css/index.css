@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  height: 100vh;            /* full screen height */
+  display: flex;            /* enable flexbox */
+  justify-content: center;  /* horizontal center */
+  align-items: center;      /* vertical center */
+}
+
+#loginForm p {
+  font-weight: bold;
+  font-size: 20px; /* pick any size: px, em, rem */
+}
+
+input[type="text"] {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  font-family: inherit;
+}
+input[type="text"]:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+.btn-row {
+  display: flex;
+  gap: 25px;
+}
+
+.btn-row button {
+  flex: 1;
+}
+
+#message {
+  display: block;
+  text-align: center;
+  font-size: 1rem !important;
+  margin-top: 3rem !important; /* increase to shift lower */
+}

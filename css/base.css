@@ -1,0 +1,20 @@
+/* Minimal reset */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  font-family: "SF Mono", monospace;
+  line-height: 1.5;
+  color: #111;
+  background: #FFFFFF;
+}
+
+/* Layout helpers */
+.container { max-width: 960px; margin: 0 auto; padding: 24px; }
+.muted { color: #555; }
+.caption {
+  font-size: 0.7em;
+  color: #888;
+  margin-left: 0.5em;
+}
+:root { --gap: 12px; }
+main { max-width: 960px; margin: 40px auto;}
