@@ -18,3 +18,13 @@ body {
 }
 :root { --gap: 12px; }
 main { max-width: 960px; margin: 40px auto;}
+
+/* photos */
+header.container {
+  text-align: center;
+}
+
+header.container img {
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
