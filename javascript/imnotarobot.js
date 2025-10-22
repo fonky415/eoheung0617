@@ -7,6 +7,7 @@
    ========================================================= */
 
 // ----------- Data -----------
+(function () {
 const SENTENCES_RAW = [
   "I am not a robot.",
   "I am Jinny Lee.",
@@ -47,6 +48,19 @@ const form = document.getElementById("answerForm");
 const input = document.getElementById("answer");
 const feedbackEl = document.getElementById("feedback");
 const progressEl = document.getElementById("progress");
+
+if (
+  !intro ||
+  !continueLink ||
+  !app ||
+  !promptEl ||
+  !form ||
+  !input ||
+  !feedbackEl ||
+  !progressEl
+) {
+  return;
+}
 
 // ----------- Utilities -----------
 
@@ -198,3 +212,4 @@ style.textContent = `
   @keyframes fadeOut { to { opacity: 0; transform: translateY(-4px); } }
 `;
 document.head.appendChild(style);
+})();

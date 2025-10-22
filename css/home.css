@@ -1,4 +1,53 @@
-main h1 {
+.home-page header.container {
   text-align: center;
-  font-size: 1.3rem;
+}
+
+.home-page header.container img {
+  margin-bottom: 24px;
+}
+
+.home-page h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.home-page h2 {
+  margin-top: 0;
+}
+
+.letter-access {
+  margin-top: 24px;
+}
+
+.letter-access__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.letter-link {
+  font-weight: 600;
+}
+
+.letter-access__label {
+  font-size: 0.95rem;
+}
+
+.letter-access .accessCode {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.letter-access .unlockBtn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.letter-access__separator {
+  color: #bbb;
 }

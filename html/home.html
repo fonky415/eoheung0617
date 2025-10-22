@@ -23,30 +23,31 @@
 
     <!-- Letter 1 unlock -->
     <div class="letter-access" data-code="prudent" data-target="letter1.html">
-      <p>
-        <a href="trivia.html" style="text-decoration: underline;">Letter 1</a>
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-        Access code:
+      <div class="letter-access__controls">
+        <a href="trivia.html" class="letter-link">Letter 1</a>
+        <span aria-hidden="true" class="letter-access__separator">|</span>
+        <span class="letter-access__label">Access code:</span>
         <input type="text" class="accessCode" placeholder="Enter code" />
         <button class="unlockBtn">Unlock</button>
-      </p>
-      <p class="muted unlockMsg"></p>
+      </div>
+      <p class="muted unlockMsg" aria-live="polite"></p>
     </div>
 
     <!-- Letter 2 unlock -->
     <div class="letter-access" data-code="honest" data-target="letter2.html">
-      <p>
-        <a href="imnotarobot.html" style="text-decoration: underline;">Letter 2</a>
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-        Access code:
+      <div class="letter-access__controls">
+        <a href="imnotarobot.html" class="letter-link">Letter 2</a>
+        <span aria-hidden="true" class="letter-access__separator">|</span>
+        <span class="letter-access__label">Access code:</span>
         <input type="text" class="accessCode" placeholder="Enter code" />
         <button class="unlockBtn">Unlock</button>
-      </p>
-      <p class="muted unlockMsg"></p>
+      </div>
+      <p class="muted unlockMsg" aria-live="polite"></p>
     </div>
   </header>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="../javascript/script.js" defer></script>
+  <script src="../javascript/utils.js" defer></script>
+  <script src="../javascript/home.js" defer></script>
 </body>
 </html>
