@@ -3,7 +3,6 @@
    =============================== */
 
 /* Reset-ish */
-* { box-sizing: border-box; }
 html, body { height: 100%; margin: 0; }
 /* Ensure hidden attribute actually hides elements (author styles may override UA defaults) */
 .screen[hidden], #app[hidden], [hidden] { display: none !important; }
