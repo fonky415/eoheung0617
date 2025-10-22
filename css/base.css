@@ -11,6 +11,7 @@ body {
 /* Layout helpers */
 .container { max-width: 960px; margin: 0 auto; padding: 24px; }
 .muted { color: #555; }
+.link-underline { text-decoration: underline; }
 .caption {
   font-size: 0.7em;
   color: #888;
