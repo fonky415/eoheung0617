@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>are you jinny?</title>
+  <meta name="description" content="typing test" />
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/imnotarobot.css">
+</head>
+<body>
+  <!-- Intro Screen -->
+  <section id="intro" class="intro screen">
+    <h1 class="title">are you a robot?</h1>
+    <p class="subtitle">
+      Enter the exact message to prove that you are not a robot and you are Jinny. (don't worry I know you're busy this won't take that long)
+    </p>
+    <p class="continue-line">
+      <a href="#" id="continueLink" class="continue"><em>continue.</em></a>
+    </p>
+  </section>
+
+  <!-- Mission Screen (hidden at first) -->
+  <main id="app" class="app screen" hidden>
+    <!-- Current sentence (rendered with *italic* / **bold** styling) -->
+    <div id="prompt" class="prompt" aria-live="polite"></div>
+
+    <!-- Input area -->
+    <form id="answerForm" class="form" autocomplete="off" spellcheck="false">
+      <label for="answer" class="sr-only">Type the sentence exactly</label>
+      <input
+        id="answer"
+        name="answer"
+        class="input"
+        type="text"
+        inputmode="text"
+        autocapitalize="off"
+        autocorrect="off"
+        autocomplete="off"
+        placeholder="Type here…"
+        aria-describedby="feedback"
+      />
+    </form>
+
+    <!-- Feedback (e.g., “nice job!”) -->
+    <div id="feedback" class="feedback" aria-live="polite"></div>
+
+    <!-- Progress (kept invisible to keep page minimal but accessible) -->
+    <div id="progress" class="sr-only" aria-live="polite"></div>
+  </main>
+
+  <script src="/javascript/imnotarobot.js" defer></script>
+</body>
+</html>

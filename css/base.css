@@ -24,3 +24,16 @@ header.container img {
   display: block;
   margin: 40px auto;
 }
+
+/* Center images that appear in main content areas */
+main img {
+  display: block;
+  margin: 24px auto;
+}
+
+footer {
+  margin-top: 40px;
+  font-size: 0.9em;
+  color: #777;
+  text-align: right;
+}

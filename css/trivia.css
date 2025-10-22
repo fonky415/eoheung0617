@@ -14,8 +14,7 @@ input[type="number"], input[type="text"], input[type="date"], select {
 .help { color: #666; font-size: .9rem; margin-top: 6px; }
 .actions { display: flex; gap: 10px; margin-top: 18px; }
 button { padding: 10px 14px; border-radius: 10px; border: 1px solid #ddd; cursor: pointer; }
-button.primary { background: #111; color: #fff; border-color: #111; }
-.ok { color: #117a32; }
+.ok { color: #2E6F40; }
 .err { color: #b00020; }
 #result { margin-top: 20px; font-weight: 600; }
 #codeWrap { display: none; margin-top: 8px; padding: 12px; border: 1px dashed #999; border-radius: 10px; }

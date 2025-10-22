@@ -1,0 +1,134 @@
+/* ===============================
+   Minimal, modern, centered layout
+   =============================== */
+
+/* Reset-ish */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+/* Ensure hidden attribute actually hides elements (author styles may override UA defaults) */
+.screen[hidden], #app[hidden], [hidden] { display: none !important; }
+body {
+  line-height: 1.5;
+  color: #0f172a;           /* slate-900 */
+  background: #ffffff;
+}
+
+/* Layout shell */
+.screen {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+  min-height: 100dvh;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+/* Intro */
+.title {
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: -0.02em;
+  margin: 0 0 12px 0;
+}
+.subtitle {
+  margin: 0 0 20px 0;
+  color: #334155; /* slate-700 */
+}
+.continue {
+  color: #2E6F40; /* accent green */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.continue:focus,
+.continue:hover { color: #2E6F40; }
+
+/* App */
+.app {
+  width: min(720px, 92vw);
+}
+.prompt {
+  font-size: clamp(18px, 2.2vw, 22px);
+  margin: 0 0 16px 0;
+  min-height: 2.5em;
+  color: #111827; /* gray-900 */
+  /* Smooth appearance */
+  opacity: 0;
+  transform: translateY(6px);
+  animation: fadeUp 280ms ease forwards;
+}
+
+/* Input */
+.form { margin: 0; }
+.input {
+  width: 100%;
+  font: inherit;
+  font-size: clamp(16px, 2vw, 18px);
+  padding: 14px 16px;
+  border: 1px solid #e5e7eb;          /* gray-200 */
+  border-radius: 12px;
+  background: #f8fafc;                /* slate-50 */
+  outline: none;
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+/* Feedback line */
+.feedback {
+  min-height: 1.5em;
+  margin-top: 10px;
+  color: #475569; /* slate-600 */
+  font-style: italic;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.feedback.show { opacity: 1; }
+
+/* Accessibility text */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Final message styling */
+.final {
+  font-size: clamp(18px, 2.2vw, 22px);
+  color: #0f172a;
+}
+.final strong {
+  /* subtle green tint matching the accent */
+  background: rgba(46,111,64,0.08);
+  border: 1px solid rgba(46,111,64,0.22);
+  padding: 0 6px;
+  border-radius: 8px;
+}
+
+/* Mobile niceties */
+@media (max-width: 420px) {
+  .screen { padding: 20px; }
+}
+
+/* --- Final link to home --- */
+.final a {
+  display: inline-block;
+  margin-top: 16px;
+  color: #0ea5e9;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-style: italic;
+}
+
+.final a:hover,
+.final a:focus {
+  color: #2E6F40;
+}

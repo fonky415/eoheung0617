@@ -60,31 +60,43 @@ if (onHome) {
   }
 })();
 
-// ---- letter unlock page logic ----
-const CORRECT_CODE = "prudent"; // change to your actual code
-const LETTER_PAGE = "letter1.html"; // the real letter page
+// ---- multi-letter unlock logic (supports many widgets on one page) ----
+document.querySelectorAll(".letter-access").forEach((box) => {
+  // Pull per-box config
+  const correctCode = (box.dataset.code || "").toLowerCase();
+  const targetPage = box.dataset.target || "#";
 
-const unlockBtn = document.getElementById("unlockBtn");
-const accessCodeInput = document.getElementById("accessCode");
-const unlockMsg = document.getElementById("unlockMsg");
+  // Find elements *inside this box only* (so duplicates elsewhere don't matter)
+  const btn  = box.querySelector(".unlockBtn")  || box.querySelector("#unlockBtn");
+  const input = box.querySelector(".accessCode") || box.querySelector("#accessCode");
+  const msg  = box.querySelector(".unlockMsg")  || box.querySelector("#unlockMsg");
 
-if (unlockBtn) {
-  unlockBtn.addEventListener("click", () => {
-    const code = accessCodeInput.value.trim();
-    if (code.toLowerCase() === CORRECT_CODE.toLowerCase()) {
-      unlockMsg.textContent = "Access granted!";
-      unlockMsg.style.color = "green";
-      setTimeout(() => {
-        window.location.href = LETTER_PAGE;
-      }, 800);
+  if (!btn || !input || !msg || !correctCode || targetPage === "#") return;
+
+  // Click to validate
+  btn.addEventListener("click", () => {
+    const code = (input.value || "").trim().toLowerCase();
+
+    if (code === correctCode) {
+      msg.textContent = "Access granted!";
+      msg.style.color = "green";
+      setTimeout(() => { window.location.href = targetPage; }, 800);
     } else {
-      unlockMsg.textContent = "Wrong code. Try again!";
-      unlockMsg.style.color = "crimson";
-      accessCodeInput.value = "";
-      accessCodeInput.focus();
+      msg.textContent = "어라 망가졌나 다시 해봐";
+      msg.style.color = "crimson";
+      input.value = "";
+      input.focus();
     }
   });
-}
+
+  // Also allow pressing Enter in the input
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      btn.click();
+    }
+  });
+});
 
 // ------- Trivia Config -------
 const ACCESS_CODE = "prudent";
