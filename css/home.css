@@ -15,6 +15,10 @@
   margin-top: 0;
 }
 
+.muted { 
+  font-size: 0.9rem;
+}
+
 .letter-access {
   margin-top: 24px;
 }
