@@ -1,17 +1,27 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Redirecting…</title>
-  <!-- Redirect quickly to the real site inside the html/ folder -->
-  <meta http-equiv="refresh" content="0; url=./html/index.html">
-  <script>window.location.replace('./html/index.html');</script>
-  <style>body{font-family:system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>"I invited you check steam"</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/index.css">
+
 </head>
+
 <body>
-  <div>
-  <p>Redirecting to the site — <a href="./html/index.html">click here if not redirected</a>.</p>
-  </div>
+  <main class="container card">
+    <p>enter server password</p>
+    <form id="loginForm">
+  <input type="text" id="password" required autofocus/>
+      <div class="btn-row">
+        <button type="submit">Accept</button>
+        <button type="button" onclick="history.back()">Back</button>
+      </div>
+      <p id="message" class="muted"></p>
+    </form>
+  </main>
+
+  <script src="javascript/script.js"></script>
 </body>
 </html>
