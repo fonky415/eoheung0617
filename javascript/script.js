@@ -1,6 +1,6 @@
 // --- config ---
 const CORRECT_PASSWORD = "congrats";
-const REDIRECT_PAGE = "home.html";
+const REDIRECT_PAGE = "html/home.html";
 
 // --- password page logic (only if the form exists) ---
 const form = document.getElementById("loginForm");
