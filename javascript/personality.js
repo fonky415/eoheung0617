@@ -1,25 +1,54 @@
 (function (window, document) {
-  const LoveSite = window.LoveSite || {};
-  const utils = LoveSite.utils;
-
   const form = document.getElementById("personalityForm");
   const resultEl = document.getElementById("result");
-  const unlockSection = document.getElementById("unlockSection");
 
-  if (!form || !resultEl || !unlockSection) return;
+  if (!form || !resultEl) return;
 
   const questionNames = Array.from({ length: 17 }, (_, index) => `q${index + 1}`);
-  let letterAccessInitialized = false;
+  const resultMessage = document.createElement("p");
 
-  function setResult(message, status) {
-    resultEl.textContent = message;
+  resultEl.appendChild(resultMessage);
+
+  function handleBackClick() {
+    window.history.back();
+  }
+
+  function clearBackButton() {
+    const backButton = resultEl.querySelector(".backBtn");
+    if (backButton) {
+      backButton.removeEventListener("click", handleBackClick);
+      backButton.remove();
+    }
+  }
+
+  function addBackButton() {
+    clearBackButton();
+    const backButton = document.createElement("button");
+    backButton.type = "button";
+    backButton.className = "backBtn";
+    backButton.textContent = "Back";
+    backButton.addEventListener("click", handleBackClick);
+    resultEl.appendChild(backButton);
+  }
+
+  function setResult(message, status, options = {}) {
+    const { showBackButton = false } = options;
+
+    resultMessage.textContent = message;
     resultEl.classList.remove("muted", "error", "success");
+
     if (status === "error") {
       resultEl.classList.add("error");
     } else if (status === "success") {
       resultEl.classList.add("success");
     } else {
       resultEl.classList.add("muted");
+    }
+
+    if (showBackButton) {
+      addBackButton();
+    } else {
+      clearBackButton();
     }
   }
 
@@ -34,24 +63,10 @@
       return;
     }
 
-    setResult('the code is "warm"', "success");
-    unlockSection.hidden = false;
-
-    if (!letterAccessInitialized && utils && typeof utils.initLetterAccess === "function") {
-      utils.initLetterAccess(unlockSection);
-      letterAccessInitialized = true;
-    }
+    setResult('the code is "warm"', "success", { showBackButton: true });
   });
 
   form.addEventListener("reset", () => {
     setResult("", "neutral");
-    unlockSection.hidden = true;
-    const accessInput = unlockSection.querySelector(".accessCode");
-    const accessMessage = unlockSection.querySelector(".unlockMsg");
-    if (accessInput) accessInput.value = "";
-    if (accessMessage) {
-      accessMessage.textContent = "";
-      accessMessage.style.color = "";
-    }
   });
 })(window, document);

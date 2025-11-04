@@ -61,9 +61,10 @@
 
 .scale {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   gap: 12px;
+  overflow-x: auto;
 }
 
 .scale-option {
@@ -111,13 +112,15 @@
 }
 
 .scale-option span {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
 
 .actions {
   display: flex;
   justify-content: center;
   gap: 16px;
+  margin-top: 32px;
 }
 
 .actions button {
@@ -134,80 +137,38 @@
   border-color: #111;
 }
 
-#result {
+.result {
   text-align: center;
   font-weight: 600;
   min-height: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
-#result.error {
+.result.error {
   color: #b00020;
 }
 
-#result.success {
+.result.success {
   color: #2e6f40;
 }
 
-.unlock {
-  border: 1px solid #e3e3e3;
-  border-radius: 16px;
-  padding: 24px;
-  text-align: center;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.05);
+.result p {
+  margin: 0;
 }
 
-.unlock .code-line {
-  font-size: 1.1rem;
-  margin: 0 0 12px;
-}
-
-.unlock .code-line strong {
-  font-weight: 700;
-}
-
-.unlock .muted {
-  margin-top: 0;
-  margin-bottom: 18px;
-}
-
-.unlock[hidden] {
-  display: none;
-}
-
-.unlock .letter-access {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: center;
-}
-
-.unlock .letter-access__controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  align-items: center;
-}
-
-.unlock .letter-access__label {
-  font-weight: 500;
-}
-
-.unlock .accessCode {
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.unlock .unlockBtn {
-  padding: 6px 14px;
-  border-radius: 6px;
+.result .backBtn {
+  padding: 10px 18px;
+  border-radius: 10px;
   border: 1px solid #ccc;
   cursor: pointer;
+  background: #fff;
 }
 
-.unlock .unlockMsg {
-  min-height: 18px;
+.result .backBtn:hover {
+  background: #f0f0f0;
 }
 
 @media (max-width: 600px) {
@@ -217,11 +178,6 @@
 
   .statement {
     font-size: 1rem;
-  }
-
-  .scale-option {
-    width: 100%;
-    justify-content: center;
   }
 
   .scale {
