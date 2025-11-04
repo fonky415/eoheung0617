@@ -1,0 +1,230 @@
+.personality-page main {
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 32px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.personality-page .intro {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.personality-page .intro h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.personality-page .intro .subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: #666;
+}
+
+.question-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.question {
+  border: 1px solid #ececec;
+  border-radius: 18px;
+  padding: 24px 24px 28px;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.06);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+
+.statement {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.question-number {
+  font-weight: 700;
+}
+
+.scale {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.scale-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #f6f6f6;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.scale-option:hover {
+  background: #ececec;
+}
+
+.scale-option:focus-within {
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.15);
+}
+
+.scale-option input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #444;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  margin: 0;
+}
+
+.scale-option input[type="radio"]::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #111;
+  transform: scale(0);
+  transition: transform 0.15s ease;
+}
+
+.scale-option input[type="radio"]:checked::after {
+  transform: scale(1);
+}
+
+.scale-option span {
+  font-size: 0.95rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.actions button {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: #fff;
+}
+
+.actions button.primary {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+#result {
+  text-align: center;
+  font-weight: 600;
+  min-height: 24px;
+}
+
+#result.error {
+  color: #b00020;
+}
+
+#result.success {
+  color: #2e6f40;
+}
+
+.unlock {
+  border: 1px solid #e3e3e3;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.05);
+}
+
+.unlock .code-line {
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+}
+
+.unlock .code-line strong {
+  font-weight: 700;
+}
+
+.unlock .muted {
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.unlock[hidden] {
+  display: none;
+}
+
+.unlock .letter-access {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.unlock .letter-access__controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+}
+
+.unlock .letter-access__label {
+  font-weight: 500;
+}
+
+.unlock .accessCode {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.unlock .unlockBtn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.unlock .unlockMsg {
+  min-height: 18px;
+}
+
+@media (max-width: 600px) {
+  .question {
+    padding: 20px;
+  }
+
+  .statement {
+    font-size: 1rem;
+  }
+
+  .scale-option {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .scale {
+    gap: 10px;
+  }
+}
