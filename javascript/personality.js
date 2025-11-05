@@ -59,11 +59,11 @@
     const unanswered = questionNames.filter((name) => !data.get(name));
 
     if (unanswered.length > 0) {
-      setResult("Please answer every question before finishing.", "error");
+      setResult("did you forget to press something..?", "error");
       return;
     }
 
-    setResult('the code is "warm"', "success", { showBackButton: true });
+    setResult('nicenice you ARE Jinny!! the code is "warm"', "success", { showBackButton: true });
   });
 
   form.addEventListener("reset", () => {
