@@ -472,13 +472,18 @@ function setupChoices(question) {
   choicesList.innerHTML = '';
   question.options.forEach((option) => {
     const li = document.createElement('li');
+    li.className = 'choice-row';
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'choice';
     btn.dataset.choice = option.key;
-    btn.textContent = option.text;
+    btn.textContent = option.key;
+    btn.setAttribute('aria-label', `${option.key}. ${option.text}`);
     btn.addEventListener('click', onChoiceClick);
-    li.appendChild(btn);
+    const label = document.createElement('span');
+    label.className = 'choice__label';
+    label.textContent = option.text;
+    li.append(btn, label);
     choicesList.appendChild(li);
   });
   choicesList.hidden = false;
