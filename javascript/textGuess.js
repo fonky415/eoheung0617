@@ -15,7 +15,6 @@ const questionSubtitleEl = document.querySelector('#questionSubtitle');
 const questionTextEl = document.querySelector('#questionText');
 const questionCard = document.querySelector('#questionCard');
 const completionCard = document.querySelector('#completionCard');
-const playAgainBtn = document.querySelector('#playAgainBtn');
 
 const HASH_PREFIX = 'q';
 const COMPLETE_HASH = 'complete';
@@ -174,16 +173,16 @@ const questions = [
       { key: 'd', text: 'hehe' },
     ],
     messages: [
-      { sender: 'Jinny', body: 'Hows orientation going' },
-      { sender: '한필립', body: "they're yapping" },
-      { sender: '한필립', body: "but i can't fully play league" },
-      { sender: 'Jinny', body: 'LMAO' },
-      { sender: '한필립', body: 'because we need to go to breakout rooms' },
-      { sender: 'Jinny', body: 'Mmmm' },
-      { sender: '한필립', body: 'so' },
-      { sender: 'Jinny', body: 'But still playing i assume?' },
-      { sender: '한필립', body: 'ermm' },
       { sender: '한필립', body: '[ㅇㅅㅇ]', hidden: true },
+      { sender: '한필립', body: 'ermm' },
+      { sender: 'Jinny', body: 'But still playing i assume?' },
+      { sender: '한필립', body: 'so' },
+      { sender: 'Jinny', body: 'Mmmm' },
+      { sender: '한필립', body: 'because we need to go to breakout rooms' },
+      { sender: 'Jinny', body: 'LMAO' },
+      { sender: '한필립', body: "but i can't fully play league" },
+      { sender: '한필립', body: "they're yapping" },
+      { sender: 'Jinny', body: 'Hows orientation going' },
     ],
   },
   {
@@ -269,7 +268,7 @@ const questions = [
   {
     title: 'greedy',
     subtitle: 'MCQ',
-    timestamp: 'Dec 15, 2024 8:56 am',
+    timestamp: 'Dec 15, 2024 8:57 am',
     prompt: "Complete Phillip's thought.",
     type: 'mcq',
     options: [
@@ -279,18 +278,18 @@ const questions = [
       { key: 'd', text: 'can we have some quality time and service and some physical touch as well' },
     ],
     messages: [
-      { sender: 'Phillip Han', body: 'idk how im supposed to answer this' },
-      { sender: 'Jinny', body: 'Bro i thought so too' },
-      { sender: 'Jinny', body: 'Idek' },
-      { sender: 'Jinny', body: 'I think' },
-      { sender: 'Phillip Han', body: 'is it same for u' },
-      { sender: 'Jinny', body: 'Acts of service and quality time' },
-      { sender: 'Phillip Han', body: 'yes' },
-      { sender: 'Jinny', body: 'But quality time and service kinda come hand in hand' },
-      { sender: 'Jinny', body: 'I think' },
       { sender: 'Phillip Han', body: "i'm greedy" },
       { sender: 'Phillip Han', body: '[i mean i want everythin]', hidden: true, footer: '❤Jinny (Dec 15, 2024 8:57 am)' },
       { sender: 'Phillip Han', body: 'yeah' },
+      { sender: 'Jinny', body: 'I think' },
+      { sender: 'Jinny', body: 'But quality time and service kinda come hand in hand' },
+      { sender: 'Phillip Han', body: 'yes' },
+      { sender: 'Jinny', body: 'Acts of service and quality time' },
+      { sender: 'Phillip Han', body: 'is it same for u' },
+      { sender: 'Jinny', body: 'I think' },
+      { sender: 'Jinny', body: 'Idek' },
+      { sender: 'Jinny', body: 'Bro i thought so too' },
+      { sender: 'Phillip Han', body: 'idk how im supposed to answer this' },
     ],
   },
   {
@@ -356,6 +355,14 @@ const questions = [
 let lives = MAX_LIVES;
 let answeredCorrectly = false;
 let currentQuestionIndex = 0;
+
+function scrollToCardTop() {
+  if (questionCard) {
+    questionCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
 
 function setHash(value = '') {
   const newUrl = `${window.location.pathname}${value ? `#${value}` : ''}`;
@@ -487,6 +494,7 @@ function onChoiceClick(event) {
   const key = button.dataset.choice;
   if (answeredCorrectly || button.disabled) return;
 
+  scrollToCardTop();
   const question = questions[currentQuestionIndex];
   const selected = question.options.find((opt) => opt.key === key);
 
@@ -538,6 +546,8 @@ function setupFrq(question) {
     } else {
       handleIncorrect(undefined, question.hint);
     }
+
+    scrollToCardTop();
   };
 }
 
@@ -616,15 +626,23 @@ function renderQuestion() {
   renderMessages(question.messages);
 
   if (question.type === 'mcq') {
-    if (choicesList) choicesList.hidden = false;
-    if (frqForm) frqForm.hidden = true;
+    if (frqForm && frqInput) {
+      frqForm.hidden = true;
+      frqInput.value = '';
+      frqInput.disabled = false;
+      frqForm.onsubmit = null;
+    }
     setupChoices(question);
   } else {
-    if (choicesList) choicesList.hidden = true;
+    if (choicesList) {
+      choicesList.innerHTML = '';
+      choicesList.hidden = true;
+    }
     setupFrq(question);
   }
 
   updateHashForQuestion();
+  scrollToCardTop();
 }
 
 function startGame(startIndex = 0) {
@@ -658,14 +676,6 @@ if (nextBtn) {
 
 if (restartBtn) {
   restartBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    resetGame();
-  });
-}
-
-if (playAgainBtn) {
-  playAgainBtn.addEventListener('click', (event) => {
     event.preventDefault();
     event.stopPropagation();
     resetGame();
