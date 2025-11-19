@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Guess The Text</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/textGuess.css">
+</head>
+<body>
+  <main class="container">
+    <section class="slide intro-slide" data-slide="intro">
+      <header class="page-header">
+        <h1>Letter Four Task</h1>
+      </header>
+      <div class="intro-copy">
+        <p>## Guess The Text</p>
+        <p>We’ve sent many many texts—just on Kakaotalk, we’ve sent each other over 63,090 texts.! This is a test to see if you can remember what we said. Maybe you can even predict it based on all the texts we’ve sent each other.? Some will be multiple choice and others you’ll have to input the actual text. No cheating by searching it on Kakao ok????</p>
+      </div>
+      <button type="button" id="proceedBtn" class="primary-btn">Proceed</button>
+    </section>
+
+    <section class="slide question-slide" data-slide="question" hidden>
+      <section class="lives" aria-live="polite">
+        <span class="lives__label">Lives:</span>
+        <span id="livesDisplay" class="lives__hearts" aria-label="3 lives remaining">❤❤❤</span>
+      </section>
+
+      <section class="chat-card" aria-labelledby="question-title" id="questionCard">
+        <div class="question-header">
+          <h2 id="question-title" class="question-title">Guess The Text</h2>
+          <p id="questionSubtitle" class="question-subtitle"></p>
+        </div>
+
+        <div class="chat-window" role="log" aria-live="polite">
+          <div id="chatTimestamp" class="timestamp" aria-label="Conversation start"></div>
+          <div id="chatMessages" class="chat-messages"></div>
+        </div>
+
+        <div class="question-block">
+          <p id="questionText" class="question-text"></p>
+
+          <ol id="choicesList" class="choices" type="a"></ol>
+
+          <form id="frqForm" class="frq-form" hidden>
+            <label class="sr-only" for="frqInput">Type the hidden text</label>
+            <input id="frqInput" type="text" autocomplete="off" class="frq-input" placeholder="Type the missing text" />
+            <button type="submit" class="submit-btn">Submit</button>
+          </form>
+
+          <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+
+          <div class="actions">
+            <button type="button" id="nextBtn" class="next-btn" hidden>Next Text ➜</button>
+            <button type="button" id="restartBtn" class="restart-btn" hidden>Restart</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="completionCard" class="chat-card completion-card" hidden>
+        <h2>you DID IT CONGRATS!!</h2>
+        <p>The code is: "smart"</p>
+        <div class="completion-actions">
+          <a class="primary-btn" href="home.html">Home</a>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="../javascript/textGuess.js" defer></script>
+</body>
+</html>
