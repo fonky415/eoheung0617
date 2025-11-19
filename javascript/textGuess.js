@@ -17,6 +17,9 @@ const questionCard = document.querySelector('#questionCard');
 const completionCard = document.querySelector('#completionCard');
 const playAgainBtn = document.querySelector('#playAgainBtn');
 
+const HASH_PREFIX = 'q';
+const COMPLETE_HASH = 'complete';
+
 const MAX_LIVES = 3;
 
 const questions = [
@@ -354,6 +357,32 @@ let lives = MAX_LIVES;
 let answeredCorrectly = false;
 let currentQuestionIndex = 0;
 
+function setHash(value = '') {
+  const newUrl = `${window.location.pathname}${value ? `#${value}` : ''}`;
+  if (window.history?.replaceState) {
+    window.history.replaceState(null, '', newUrl);
+  } else {
+    window.location.hash = value;
+  }
+}
+
+function updateHashForQuestion(index = currentQuestionIndex) {
+  const hashValue = `${HASH_PREFIX}${index + 1}`;
+  setHash(hashValue);
+}
+
+function getHashQuestionIndex() {
+  const hash = window.location.hash.toLowerCase();
+  const match = hash.match(new RegExp(`#${HASH_PREFIX}(\\d+)`));
+  if (match) {
+    const idx = Number.parseInt(match[1], 10) - 1;
+    if (Number.isInteger(idx) && idx >= 0 && idx < questions.length) {
+      return idx;
+    }
+  }
+  return null;
+}
+
 function normalizeAnswer(text) {
   return text.trim().toLowerCase();
 }
@@ -427,6 +456,7 @@ function handleCorrect(button) {
     if (nextBtn) nextBtn.hidden = true;
     questionCard.hidden = true;
     completionCard.hidden = false;
+    setHash(COMPLETE_HASH);
     return;
   }
 
@@ -593,18 +623,25 @@ function renderQuestion() {
     if (choicesList) choicesList.hidden = true;
     setupFrq(question);
   }
+
+  updateHashForQuestion();
 }
 
-function resetGame() {
+function startGame(startIndex = 0) {
   lives = MAX_LIVES;
-  currentQuestionIndex = 0;
+  currentQuestionIndex = Math.min(Math.max(startIndex, 0), questions.length - 1);
   answeredCorrectly = false;
   updateLivesDisplay();
   completionCard.hidden = true;
   questionCard.hidden = false;
-  renderQuestion();
+  clearFeedback();
   if (introSlide) introSlide.hidden = true;
   if (questionSlide) questionSlide.hidden = false;
+  renderQuestion();
+}
+
+function resetGame() {
+  startGame(0);
 }
 
 if (nextBtn) {
@@ -639,10 +676,14 @@ if (proceedBtn && introSlide && questionSlide) {
   proceedBtn.addEventListener('click', (event) => {
     event.preventDefault();
     event.stopPropagation();
-    introSlide.hidden = true;
-    questionSlide.hidden = false;
-    renderQuestion();
+    startGame(0);
   });
 }
 
-updateLivesDisplay();
+const initialHashIndex = getHashQuestionIndex();
+
+if (initialHashIndex !== null) {
+  startGame(initialHashIndex);
+} else {
+  updateLivesDisplay();
+}

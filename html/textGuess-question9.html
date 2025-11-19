@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url=textGuess.html#q9">
+  <title>Guess The Text</title>
+  <script>
+    const match = window.location.pathname.match(/textGuess-question(\d+)\.html/i);
+    const idx = match ? match[1] : '9';
+    window.location.replace(`textGuess.html#q${idx}`);
+  </script>
+</head>
+<body>
+  <p>Redirecting to Guess The Text…</p>
+</body>
+</html>
