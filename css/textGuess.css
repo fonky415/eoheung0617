@@ -1,5 +1,5 @@
 main.container {
-  max-width: 720px;
+  max-width: 840px;
   padding: 32px 16px 64px;
   margin: 0 auto;
 }
@@ -44,18 +44,20 @@ main.container {
   align-self: center;
   border: none;
   border-radius: 999px;
-  background: #4f5dff;
+  background: #2f9c4c;
   color: #fff;
   padding: 12px 28px;
   font-size: 1rem;
   font-family: inherit;
   cursor: pointer;
+  text-decoration: none;
+  text-align: center;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .primary-btn:hover,
 .primary-btn:focus-visible {
-  background: #3742f7;
+  background: #24803d;
   transform: translateY(-1px);
 }
 
@@ -82,6 +84,23 @@ main.container {
   box-shadow: 0 12px 24px rgba(17, 17, 17, 0.06);
 }
 
+.question-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.question-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.question-subtitle {
+  margin: 0;
+  color: #4f5d44;
+}
+
 .chat-window {
   background: #f9fef5;
   border-radius: 20px;
@@ -96,6 +115,12 @@ main.container {
   text-align: center;
   font-size: 0.9rem;
   color: #555;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .message {
@@ -121,16 +146,16 @@ main.container {
 
 .message__footer {
   margin: 12px 0 0;
-  font-size: 0.8rem;
-  color: #777;
-}
-
-.message.jinny {
-  margin-left: auto;
+  font-size: 0.85rem;
+  color: #365c2e;
 }
 
 .message.phillip {
   margin-right: auto;
+}
+
+.message.jinny {
+  margin-left: auto;
 }
 
 .hidden-text {
@@ -189,6 +214,44 @@ main.container {
   box-shadow: none;
 }
 
+.frq-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.frq-input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid #9ed48d;
+  background: #d9fdd3;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.frq-input:focus-visible {
+  outline: 2px solid #2f9c4c;
+}
+
+.submit-btn {
+  border: none;
+  border-radius: 14px;
+  background: #2f9c4c;
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover,
+.submit-btn:focus-visible {
+  background: #24803d;
+  transform: translateY(-1px);
+}
+
 .feedback {
   min-height: 1.2em;
   font-weight: 600;
@@ -212,7 +275,7 @@ main.container {
 .restart-btn {
   border: none;
   border-radius: 999px;
-  background: #4f5dff;
+  background: #2f9c4c;
   color: #fff;
   padding: 10px 20px;
   font-size: 0.95rem;
@@ -234,12 +297,24 @@ main.container {
 
 .next-btn:hover,
 .next-btn:focus-visible {
-  background: #3742f7;
+  background: #24803d;
 }
 
 .restart-btn:hover,
 .restart-btn:focus-visible {
   background: #e74b6b;
+}
+
+.completion-card {
+  text-align: center;
+  gap: 12px;
+}
+
+.completion-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 @media (max-width: 600px) {
@@ -249,5 +324,14 @@ main.container {
 
   .chat-window {
     padding: 16px;
+  }
+
+  .frq-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .submit-btn {
+    width: 100%;
   }
 }

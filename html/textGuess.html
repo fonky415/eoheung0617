@@ -26,54 +26,43 @@
         <span id="livesDisplay" class="lives__hearts" aria-label="3 lives remaining">❤❤❤</span>
       </section>
 
-      <section class="chat-card" aria-labelledby="question-title">
-        <h2 id="question-title" class="sr-only">Our first text</h2>
+      <section class="chat-card" aria-labelledby="question-title" id="questionCard">
+        <div class="question-header">
+          <h2 id="question-title" class="question-title">Guess The Text</h2>
+          <p id="questionSubtitle" class="question-subtitle"></p>
+        </div>
+
         <div class="chat-window" role="log" aria-live="polite">
-          <div class="timestamp">Oct 27, 2024 11:46 pm</div>
-          <div class="message jinny">
-            <p class="message__sender">Jinny</p>
-            <p class="message__body hidden-text" data-original="[phillip do you have access to 9th and 10th grade photos? Like the ones they use for powerschool?]">[text hidden]</p>
-          </div>
-          <div class="message phillip">
-            <p class="message__sender">Phillip Han</p>
-            <p class="message__body">I’m not sure I never looked for them</p>
-          </div>
-          <div class="message phillip">
-            <p class="message__sender">Phillip Han</p>
-            <p class="message__body">Why</p>
-          </div>
-          <div class="message jinny">
-            <p class="message__sender">Jinny</p>
-            <p class="message__body">cuz me and susie need the photos of the jv basketball kids so we know what they look like..</p>
-          </div>
-          <div class="message phillip">
-            <p class="message__sender">Phillip Han</p>
-            <p class="message__body">Well sorry I looked for it but it’s not in yearbook drive</p>
-          </div>
-          <div class="message jinny">
-            <p class="message__sender">Jinny</p>
-            <p class="message__body">Ohhh its okay thenn</p>
-          </div>
-          <div class="message jinny">
-            <p class="message__sender">Jinny</p>
-            <p class="message__body">Thanks for looking for itt</p>
-            <p class="message__footer">❤Phillip Han (Oct 28, 2024 2:29 am)</p>
-          </div>
+          <div id="chatTimestamp" class="timestamp" aria-label="Conversation start"></div>
+          <div id="chatMessages" class="chat-messages"></div>
         </div>
 
         <div class="question-block">
-          <p class="question-text">What was the very first text in this thread?</p>
-          <ol class="choices" type="a">
-            <li><button type="button" class="choice" data-choice="a">phillip do you have access to 9th and 10th grade photos? Like the ones they use for powerschool?</button></li>
-            <li><button type="button" class="choice" data-choice="b">hey phillip youre in yearbook right? do you have 9th and 10th grade photos?</button></li>
-            <li><button type="button" class="choice" data-choice="c">phillip do you still have powerschool photos of 9th and 10th graders?</button></li>
-            <li><button type="button" class="choice" data-choice="d">phillip 사실 i think i love you</button></li>
-          </ol>
+          <p id="questionText" class="question-text"></p>
+
+          <ol id="choicesList" class="choices" type="a"></ol>
+
+          <form id="frqForm" class="frq-form" hidden>
+            <label class="sr-only" for="frqInput">Type the hidden text</label>
+            <input id="frqInput" type="text" autocomplete="off" class="frq-input" placeholder="Type the missing text" />
+            <button type="submit" class="submit-btn">Submit</button>
+          </form>
+
           <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+
           <div class="actions">
             <button type="button" id="nextBtn" class="next-btn" hidden>Next Text ➜</button>
             <button type="button" id="restartBtn" class="restart-btn" hidden>Restart</button>
           </div>
+        </div>
+      </section>
+
+      <section id="completionCard" class="chat-card completion-card" hidden>
+        <h2>you DID IT CONGRATS!!</h2>
+        <p>The code is: "smart"</p>
+        <div class="completion-actions">
+          <a class="primary-btn" href="home.html">Home</a>
+          <button type="button" id="playAgainBtn" class="restart-btn">Play Again</button>
         </div>
       </section>
     </section>
