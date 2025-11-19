@@ -608,7 +608,10 @@ function resetGame() {
 }
 
 if (nextBtn) {
-  nextBtn.addEventListener('click', () => {
+  nextBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
     if (currentQuestionIndex < questions.length - 1) {
       currentQuestionIndex += 1;
       renderQuestion();
@@ -617,15 +620,25 @@ if (nextBtn) {
 }
 
 if (restartBtn) {
-  restartBtn.addEventListener('click', resetGame);
+  restartBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    resetGame();
+  });
 }
 
 if (playAgainBtn) {
-  playAgainBtn.addEventListener('click', resetGame);
+  playAgainBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    resetGame();
+  });
 }
 
 if (proceedBtn && introSlide && questionSlide) {
-  proceedBtn.addEventListener('click', () => {
+  proceedBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     introSlide.hidden = true;
     questionSlide.hidden = false;
     renderQuestion();
