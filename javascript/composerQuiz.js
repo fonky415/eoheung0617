@@ -75,24 +75,17 @@ const nextBtn = document.getElementById('nextBtn');
 // YouTube API Ready Handler
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('youtubePlayer', {
-    height: '360',
-    width: '640',
+    height: '0',
+    width: '0',
     videoId: questions[0].videoId,
     playerVars: {
       autoplay: 0,
-      controls: 1   // turn controls on temporarily to see what YouTube shows
+      controls: 0
     },
     events: {
-      onReady: onPlayerReady,
-      onError: onPlayerError,
-      onStateChange: onPlayerStateChange
+      onReady: onPlayerReady
     }
   });
-}
-
-function onPlayerError(event) {
-  console.error('YouTube error:', event.data, 'for', questions[currentQuestion]);
-  feedback.textContent = `YouTube error ${event.data} on: ${questions[currentQuestion].title}`;
 }
 
 function onPlayerReady() {
@@ -211,4 +204,3 @@ nextBtn.addEventListener('click', handleNextQuestion);
 
 // Make onYouTubeIframeAPIReady available globally
 window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-
