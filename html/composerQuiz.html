@@ -9,12 +9,13 @@
 </head>
 <body>
   <main class="container">
-    <header class="quiz-header">
+    <header class="quiz-header" id="quizHeader">
       <h1>Guess the Composer</h1>
       <p class="progress-text" id="progressText">Question 1 of 10</p>
     </header>
 
-    <section class="quiz-content">
+    <!-- Quiz section -->
+    <section class="quiz-content" id="quizContent">
       <div class="progress-bar-container">
         <div class="progress-bar" id="progressBar"></div>
       </div>
@@ -23,7 +24,7 @@
         <p class="instruction">Listen to the piece and guess the composer:</p>
         
         <div class="audio-controls">
-          <button type="button" id="playBtn" class="control-btn">Play</button>
+          <button type="button" id="playBtn" class="control-btn" disabled>Play</button>
           <button type="button" id="pauseBtn" class="control-btn" disabled>Pause</button>
         </div>
       </div>
@@ -40,7 +41,29 @@
       <button type="button" id="nextBtn" class="next-btn" hidden>Next Question</button>
     </section>
 
-    <!-- Hidden YouTube player -->
+    <!-- Letter section (initially hidden, same page) -->
+    <section class="letter-section" id="letterSection" hidden>
+      <header class="letter-header">
+        <h1>my fifth letter</h1>
+    <p>Dear Jinny,,,,</p>
+    <p>hiii long time no see.! YES I know I it’s been way too long since I updated this and I could give the 핑게 that I did it on purpose to make you lock in but I was just lazy. 미안ㅎ.ㅎ 난 시간밖에 없는데 롤처럼 쓸때없이 시간낭비 하네.. LOCK IN 할게.!</p>
+
+    <p>I WISH I could be next to you right now and give your neck a massage (actually just everywhere) and go to gym with you and study with you and hug you and kiss you and give you mental support and play you piano and just watch you in general (ethically of course). I want to fold your laundry for you and help you carry it up the stairs on your leg days. (btw my ass hurts as I’m writing this right nowㅋㅋㅋ) I think I’ve been coping recently by not really thinking about what I miss right now but now that I think about it there’s so much I miss and I 반성 right now for not missing you more. PLEASE COME TO KOREA I NEED YOU HERE JANICE CAN PLAY WITH ALVIN</p>
+
+    <p>Also you get bonus procrastination content: here’s my 
+      <a class="link-underline" href="https://youtu.be/aa0EbG59etc" target="_blank">vlog3</a> 
+      and 
+      <a class="link-underline" href="https://youtu.be/LJs6OW29gOw" target="_blank">vlog6</a>. 
+      Perhaps I should’ve published this after your finals..
+    </p>
+
+    <p>공부랑 빨래 화이팅ㅇㅇ!! I will wake up early tomorrow so I can call you before I go to barista. Hopefully my body decides to wake up.! Love you so muchhh</p>
+
+    <br><p>- Phillip<br>
+    <footer>December 4 1:01AM</footer></p>
+    </section>
+
+    <!-- Hidden YouTube player (keeps playing across quiz → letter) -->
     <div id="youtubePlayer" style="opacity:0; pointer-events:none; width:0; height:0; position:absolute;"></div>
   </main>
 

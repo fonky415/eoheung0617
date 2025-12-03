@@ -1,56 +1,57 @@
 const questions = [
   {
-    videoId: '2eWjQOdYzMQ',
+    videoId: '2eWjQOdYzMQ', // Vivaldi - Gloria RV 589
     title: 'Gloria, RV589',
     composer: 'Vivaldi'
   },
   {
-    videoId: 'nqXxtY8IvRw',
+    videoId: 'nqXxtY8IvRw', // Vivaldi - La tempesta di mare, RV 253
     title: 'Violin Concerto in E-flat major "La Tempesta di Mare"',
     composer: 'Vivaldi'
   },
   {
-    videoId: '_NvZRo-3wvU',
+    videoId: '_NvZRo-3wvU', // Bach Cello Suite No.2
     title: 'Cello Suite No.2 in D minor BWV 1008',
     composer: 'Bach',
-    startSeconds: 17  // start at 00:17
+    startSeconds: 17 // start at 00:17
   },
   {
-    videoId: 'e24V_ErHqGE',
+    videoId: 'e24V_ErHqGE', // Handel Water Music
     title: 'Water Music Suites Nos. 1–3',
     composer: 'Handel'
   },
   {
-    videoId: 'U9FaoRJAgII',
+    videoId: 'U9FaoRJAgII', // Handel Arrival of the Queen of Sheba
     title: 'Arrival Of The Queen Of Sheba',
     composer: 'Handel'
   },
   {
-    videoId: 'NGAUH2llZdU',
+    videoId: 'NGAUH2llZdU', // Handel Israel in Egypt
     title: 'Israel in Egypt',
     composer: 'Handel'
   },
   {
-    videoId: 'ILKJcsET-NM',
+    videoId: 'ILKJcsET-NM', // Bach Double Concerto
     title: 'Concerto for Two Violins in D minor BWV 1043',
     composer: 'Bach',
-    startSeconds: 7   // start at 00:07
+    startSeconds: 7 // start at 00:07
   },
   {
-    videoId: 'ho9rZjlsyYY',
+    videoId: 'ho9rZjlsyYY', // Bach Toccata and Fugue
     title: 'Toccata and Fugue in D minor',
     composer: 'Bach'
   },
   {
-    videoId: 'kzYt3A_Y2SE',
+    videoId: 'kzYt3A_Y2SE', // Bach French Suite No.2
     title: 'French Suite No.2 in C minor BWV 813',
     composer: 'Bach',
-    startSeconds: 5   // start at 00:05
+    startSeconds: 5 // start at 00:05
   },
   {
-    videoId: '1PkD47rNkfY',
+    videoId: '1PkD47rNkfY', // Bach Air on the G String
     title: 'Air on the G String',
     composer: 'Bach'
+    startSeconds: 2 // start at 00:02
   }
 ];
 
@@ -74,6 +75,9 @@ const pauseBtn = document.getElementById('pauseBtn');
 const composerOptions = document.getElementById('composerOptions');
 const feedback = document.getElementById('feedback');
 const nextBtn = document.getElementById('nextBtn');
+const quizContent = document.getElementById('quizContent');
+const letterSection = document.getElementById('letterSection');
+const quizHeader = document.getElementById('quizHeader');
 
 // YouTube API Ready Handler
 function onYouTubeIframeAPIReady() {
@@ -87,7 +91,6 @@ function onYouTubeIframeAPIReady() {
     },
     events: {
       onReady: onPlayerReady
-      // no onStateChange here, to avoid the undefined error
     }
   });
 }
@@ -208,15 +211,27 @@ function showCompletionScreen() {
   nextBtn.textContent = 'Continue to Letter';
   nextBtn.hidden = false;
 
-  // Remove the old handler and add the new one
+  // Switch handler: next click goes to in-page letter
   nextBtn.removeEventListener('click', handleNextQuestion);
   nextBtn.addEventListener('click', handleContinueToLetter, { once: true });
 }
 
 function handleContinueToLetter() {
+  // Optional fade-out before swap
   document.body.classList.add('fade-out');
   setTimeout(() => {
-    window.location.href = 'letter5.html';
+    // Hide the quiz UI
+    if (quizHeader) quizHeader.hidden = true;
+    quizContent.hidden = true;
+
+    // Show the letter section on the SAME page
+    letterSection.hidden = false;
+
+    // Remove fade class so the letter fades back in if your CSS defines it
+    document.body.classList.remove('fade-out');
+
+    // Important: DO NOT pause the player here.
+    // Air on the G String (last question) will keep playing in the background.
   }, ANIMATION_DURATION.FADE_OUT);
 }
 
