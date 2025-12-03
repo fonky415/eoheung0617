@@ -84,17 +84,21 @@ function onYouTubeIframeAPIReady() {
     },
     events: {
       onReady: onPlayerReady
+      // no onStateChange here, to avoid the undefined error
     }
   });
 }
 
+// Called when the player is ready
 function onPlayerReady() {
   updateProgress();
+  // Enable play button only after player is ready
+  playBtn.disabled = false;
+  pauseBtn.disabled = true;
 }
 
 function updateProgress() {
   progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
-  // Show accurate progress including current question
   const percentage = ((currentQuestion + 1) / questions.length) * 100;
   progressBar.style.width = `${percentage}%`;
 }
@@ -104,26 +108,31 @@ function loadQuestion() {
   feedback.textContent = '';
   feedback.classList.remove('correct', 'incorrect');
   nextBtn.hidden = true;
-  
+
   document.querySelectorAll('.composer-btn').forEach(btn => {
     btn.disabled = false;
   });
-  
-  player.loadVideoById(questions[currentQuestion].videoId);
+
+  if (player && typeof player.loadVideoById === 'function') {
+    player.loadVideoById(questions[currentQuestion].videoId);
+  }
+
   updateProgress();
-  
+
   playBtn.disabled = false;
   pauseBtn.disabled = true;
 }
 
 // Play/Pause Controls
 playBtn.addEventListener('click', () => {
+  if (!player || typeof player.playVideo !== 'function') return;
   player.playVideo();
   playBtn.disabled = true;
   pauseBtn.disabled = false;
 });
 
 pauseBtn.addEventListener('click', () => {
+  if (!player || typeof player.pauseVideo !== 'function') return;
   player.pauseVideo();
   playBtn.disabled = false;
   pauseBtn.disabled = true;
@@ -132,19 +141,19 @@ pauseBtn.addEventListener('click', () => {
 // Composer Selection Handler
 composerOptions.addEventListener('click', (e) => {
   if (answered) return;
-  
+
   const btn = e.target.closest('.composer-btn');
   if (!btn) return;
-  
+
   const guess = btn.dataset.composer;
   const correct = questions[currentQuestion].composer;
-  
+
   answered = true;
-  
+
   document.querySelectorAll('.composer-btn').forEach(b => {
     b.disabled = true;
   });
-  
+
   if (guess === correct) {
     feedback.textContent = `Correct! This is ${questions[currentQuestion].title} by ${correct}.`;
     feedback.classList.add('correct');
@@ -172,7 +181,7 @@ composerOptions.addEventListener('click', (e) => {
 // Next Button Handler - using named function
 function handleNextQuestion() {
   currentQuestion++;
-  
+
   if (currentQuestion >= questions.length) {
     showCompletionScreen();
   } else {
@@ -186,7 +195,7 @@ function showCompletionScreen() {
   feedback.classList.add('correct');
   nextBtn.textContent = 'Continue to Letter';
   nextBtn.hidden = false;
-  
+
   // Remove the old handler and add the new one
   nextBtn.removeEventListener('click', handleNextQuestion);
   nextBtn.addEventListener('click', handleContinueToLetter, { once: true });
