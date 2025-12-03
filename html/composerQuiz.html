@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Composer Quiz</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/composerQuiz.css">
+</head>
+<body>
+  <main class="container">
+    <header class="quiz-header">
+      <h1>Guess the Composer</h1>
+      <p class="progress-text" id="progressText">Question 1 of 10</p>
+    </header>
+
+    <section class="quiz-content">
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="audio-section">
+        <p class="instruction">Listen to the piece and guess the composer:</p>
+        
+        <div class="audio-controls">
+          <button type="button" id="playBtn" class="control-btn">Play</button>
+          <button type="button" id="pauseBtn" class="control-btn" disabled>Pause</button>
+        </div>
+      </div>
+
+      <div class="composer-options" id="composerOptions">
+        <button type="button" class="composer-btn" data-composer="Bach">Bach</button>
+        <button type="button" class="composer-btn" data-composer="Vivaldi">Vivaldi</button>
+        <button type="button" class="composer-btn" data-composer="Handel">Handel</button>
+        <button type="button" class="composer-btn" data-composer="Monteverdi">Monteverdi</button>
+      </div>
+
+      <div class="feedback" id="feedback"></div>
+      
+      <button type="button" id="nextBtn" class="next-btn" hidden>Next Question</button>
+    </section>
+
+    <!-- Hidden YouTube player -->
+    <div id="youtubePlayer" style="opacity:0; pointer-events:none; width:0; height:0; position:absolute;"></div>
+  </main>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="../javascript/composerQuiz.js" defer></script>
+</body>
+</html>
