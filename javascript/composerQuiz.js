@@ -1,51 +1,54 @@
 const questions = [
   {
-    videoId: '2eWjQOdYzMQ', // Vivaldi - Gloria RV 589 (full)
+    videoId: '2eWjQOdYzMQ',
     title: 'Gloria, RV589',
     composer: 'Vivaldi'
   },
   {
-    videoId: 'nqXxtY8IvRw', // Vivaldi - La tempesta di mare, RV 253
+    videoId: 'nqXxtY8IvRw',
     title: 'Violin Concerto in E-flat major "La Tempesta di Mare"',
     composer: 'Vivaldi'
   },
   {
-    videoId: '_NvZRo-3wvU', // Bach Cello Suite No.2 in D minor BWV 1008 (Netherlands Bach Society)
+    videoId: '_NvZRo-3wvU',
     title: 'Cello Suite No.2 in D minor BWV 1008',
-    composer: 'Bach'
+    composer: 'Bach',
+    startSeconds: 17  // start at 00:17
   },
   {
-    videoId: 'e24V_ErHqGE', // Handel Water Music Suites 1–3 (Orchestre Paul Kuentz)
+    videoId: 'e24V_ErHqGE',
     title: 'Water Music Suites Nos. 1–3',
     composer: 'Handel'
   },
   {
-    videoId: 'U9FaoRJAgII', // Handel Arrival of the Queen of Sheba (Academy of Ancient Music)
+    videoId: 'U9FaoRJAgII',
     title: 'Arrival Of The Queen Of Sheba',
     composer: 'Handel'
   },
   {
-    videoId: 'NGAUH2llZdU', // Handel Israel in Egypt (Brilliant Classics)
+    videoId: 'NGAUH2llZdU',
     title: 'Israel in Egypt',
     composer: 'Handel'
   },
   {
-    videoId: 'ILKJcsET-NM', // Bach Double Violin Concerto BWV 1043 (Netherlands Bach Society)
+    videoId: 'ILKJcsET-NM',
     title: 'Concerto for Two Violins in D minor BWV 1043',
-    composer: 'Bach'
+    composer: 'Bach',
+    startSeconds: 7   // start at 00:07
   },
   {
-    videoId: 'ho9rZjlsyYY', // Bach Toccata and Fugue in D minor (your already-working one)
+    videoId: 'ho9rZjlsyYY',
     title: 'Toccata and Fugue in D minor',
     composer: 'Bach'
   },
   {
-    videoId: 'kzYt3A_Y2SE', // Bach French Suite No.2 BWV 813 (Netherlands Bach Society)
+    videoId: 'kzYt3A_Y2SE',
     title: 'French Suite No.2 in C minor BWV 813',
-    composer: 'Bach'
+    composer: 'Bach',
+    startSeconds: 5   // start at 00:05
   },
   {
-    videoId: '1PkD47rNkfY', // Bach Air on the G String (orchestral suite)
+    videoId: '1PkD47rNkfY',
     title: 'Air on the G String',
     composer: 'Bach'
   }
@@ -113,8 +116,17 @@ function loadQuestion() {
     btn.disabled = false;
   });
 
+  const q = questions[currentQuestion];
+
   if (player && typeof player.loadVideoById === 'function') {
-    player.loadVideoById(questions[currentQuestion].videoId);
+    if (q.startSeconds != null) {
+      player.loadVideoById({
+        videoId: q.videoId,
+        startSeconds: q.startSeconds
+      });
+    } else {
+      player.loadVideoById(q.videoId);
+    }
   }
 
   updateProgress();
