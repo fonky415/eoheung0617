@@ -50,7 +50,7 @@ const questions = [
   {
     videoId: '1PkD47rNkfY', // Bach Air on the G String
     title: 'Air on the G String',
-    composer: 'Bach'
+    composer: 'Bach',
     startSeconds: 2 // start at 00:02
   }
 ];
