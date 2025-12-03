@@ -1,51 +1,51 @@
 const questions = [
   {
-    videoId: 'ho9rZjlsyYY',
+    videoId: '2eWjQOdYzMQ', // Vivaldi - Gloria RV 589 (full)
     title: 'Gloria, RV589',
     composer: 'Vivaldi'
   },
   {
-    videoId: 'Xvax4uIFYu0',
+    videoId: 'nqXxtY8IvRw', // Vivaldi - La tempesta di mare, RV 253
     title: 'Violin Concerto in E-flat major "La Tempesta di Mare"',
     composer: 'Vivaldi'
   },
   {
-    videoId: 'LU_QR_FTt3E',
+    videoId: '_NvZRo-3wvU', // Bach Cello Suite No.2 in D minor BWV 1008 (Netherlands Bach Society)
     title: 'Cello Suite No.2 in D minor BWV 1008',
     composer: 'Bach'
   },
   {
-    videoId: 'va0WeYbwFAQ',
+    videoId: 'e24V_ErHqGE', // Handel Water Music Suites 1–3 (Orchestre Paul Kuentz)
     title: 'Water Music Suites Nos. 1–3',
     composer: 'Handel'
   },
   {
-    videoId: 'OMhByUiZikY',
+    videoId: 'U9FaoRJAgII', // Handel Arrival of the Queen of Sheba (Academy of Ancient Music)
     title: 'Arrival Of The Queen Of Sheba',
     composer: 'Handel'
   },
   {
-    videoId: 'V9zz7HMO-Qc',
+    videoId: 'NGAUH2llZdU', // Handel Israel in Egypt (Brilliant Classics)
     title: 'Israel in Egypt',
     composer: 'Handel'
   },
   {
-    videoId: 'FBnAZKYNd_E',
+    videoId: 'ILKJcsET-NM', // Bach Double Violin Concerto BWV 1043 (Netherlands Bach Society)
     title: 'Concerto for Two Violins in D minor BWV 1043',
     composer: 'Bach'
   },
   {
-    videoId: 'ho9rZjlsyYY',
+    videoId: 'ho9rZjlsyYY', // Bach Toccata and Fugue in D minor (your already-working one)
     title: 'Toccata and Fugue in D minor',
     composer: 'Bach'
   },
   {
-    videoId: 'XZXXR3eJ-24',
+    videoId: 'kzYt3A_Y2SE', // Bach French Suite No.2 BWV 813 (Netherlands Bach Society)
     title: 'French Suite No.2 in C minor BWV 813',
     composer: 'Bach'
   },
   {
-    videoId: 'rrVDATvThp8',
+    videoId: '1PkD47rNkfY', // Bach Air on the G String (orchestral suite)
     title: 'Air on the G String',
     composer: 'Bach'
   }
