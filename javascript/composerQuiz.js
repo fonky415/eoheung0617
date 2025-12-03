@@ -54,8 +54,8 @@ const questions = [
 // Constants for timing and animation
 const ANIMATION_DURATION = {
   CORRECT_FLASH: 500,
-  INCORRECT_DELAY: 2000,
-  FADE_OUT: 500
+  INCORRECT_DELAY: 500,
+  FADE_OUT: 400
 };
 
 // State
@@ -75,17 +75,24 @@ const nextBtn = document.getElementById('nextBtn');
 // YouTube API Ready Handler
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('youtubePlayer', {
-    height: '0',
-    width: '0',
+    height: '360',
+    width: '640',
     videoId: questions[0].videoId,
     playerVars: {
       autoplay: 0,
-      controls: 0
+      controls: 1   // turn controls on temporarily to see what YouTube shows
     },
     events: {
-      onReady: onPlayerReady
+      onReady: onPlayerReady,
+      onError: onPlayerError,
+      onStateChange: onPlayerStateChange
     }
   });
+}
+
+function onPlayerError(event) {
+  console.error('YouTube error:', event.data, 'for', questions[currentQuestion]);
+  feedback.textContent = `YouTube error ${event.data} on: ${questions[currentQuestion].title}`;
 }
 
 function onPlayerReady() {
@@ -204,3 +211,4 @@ nextBtn.addEventListener('click', handleNextQuestion);
 
 // Make onYouTubeIframeAPIReady available globally
 window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
