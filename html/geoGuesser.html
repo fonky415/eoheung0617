@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GeoGuesser Challenge</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/geoGuesser.css">
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b99847d06fe001c182a6a3ef8804a0ca"></script>
+</head>
+<body>
+  <div class="game-container">
+    <header class="game-header">
+      <h1>GeoGuesser Challenge</h1>
+      <div class="game-info">
+        <span class="round-counter">Round: <span id="currentRound">1</span>/3</span>
+        <span class="score">Score: <span id="totalScore">0</span></span>
+      </div>
+    </header>
+
+    <div class="game-content">
+      <div class="map-container">
+        <div id="mainMap"></div>
+        <div class="location-name" id="locationName">Where am I?</div>
+      </div>
+
+      <div class="guess-container">
+        <h3>Make your guess!</h3>
+        <div id="guessMap"></div>
+        <button id="submitGuess" class="submit-btn">Submit Guess</button>
+        <p class="instruction">Click on the map to place your guess</p>
+      </div>
+    </div>
+
+    <div class="result-overlay" id="resultOverlay">
+      <div class="result-content">
+        <h2 id="resultTitle">Round Result</h2>
+        <div class="result-details">
+          <p class="distance">Distance: <span id="distance">-</span> km</p>
+          <p class="round-score">Points: <span id="roundScore">-</span></p>
+        </div>
+        <button id="nextRound" class="next-btn">Next Round</button>
+      </div>
+    </div>
+
+    <div class="final-overlay" id="finalOverlay">
+      <div class="final-content">
+        <h2>Game Complete!</h2>
+        <p class="final-score">Final Score: <span id="finalScore">0</span></p>
+        <div class="access-code">
+          <p>Your access code is:</p>
+          <h3 class="code">master</h3>
+          <p class="hint">Enter this code on the home page to unlock Letter 6!</p>
+        </div>
+        <a href="home.html" class="home-btn">Return to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../javascript/geoGuesser.js"></script>
+</body>
+</html>
