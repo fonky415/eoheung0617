@@ -28,9 +28,21 @@ let roadview, roadviewClient, guessMap;
 
 // Initialize maps
 function initMaps() {
-  // Initialize Roadview
+  // Ensure container exists
   const roadviewContainer = document.getElementById('roadview');
-  roadview = new kakao.maps.Roadview(roadviewContainer);
+  if (!roadviewContainer) {
+    console.error('Roadview container not found');
+    return;
+  }
+
+  // Initialize Roadview with explicit options
+  const rvOptions = {
+    panoId: 0,
+    panoX: 0,
+    panoY: 0
+  };
+  
+  roadview = new kakao.maps.Roadview(roadviewContainer, rvOptions);
   roadviewClient = new kakao.maps.RoadviewClient();
   
   // Load first location's roadview
@@ -38,6 +50,11 @@ function initMaps() {
   
   // Initialize guess map
   const guessMapContainer = document.getElementById('guessMap');
+  if (!guessMapContainer) {
+    console.error('Guess map container not found');
+    return;
+  }
+  
   const guessMapOption = {
     center: new kakao.maps.LatLng(36.5, 127.5),
     level: 13
@@ -62,12 +79,15 @@ function loadRoadview(roundIndex) {
     if (panoId) {
       roadview.setPanoId(panoId, position);
     } else {
-      console.error('No roadview available at this location');
-      // Fallback: try slightly different position
-      const altPosition = new kakao.maps.LatLng(location.lat + 0.001, location.lng + 0.001);
-      roadviewClient.getNearestPanoId(altPosition, 100, function(altPanoId) {
+      console.log('No roadview found within 50m, trying larger radius...');
+      // Fallback: try slightly different position with larger radius
+      roadviewClient.getNearestPanoId(position, 200, function(altPanoId) {
         if (altPanoId) {
-          roadview.setPanoId(altPanoId, altPosition);
+          roadview.setPanoId(altPanoId, position);
+        } else {
+          console.error('No roadview available at this location');
+          alert('No street view available for this location. Skipping to next round.');
+          nextRound();
         }
       });
     }
@@ -186,21 +206,30 @@ function showFinalResults() {
   overlay.classList.add('active');
 }
 
-// Initialize game
-window.onload = function() {
+// Initialize game when DOM is fully loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initGame);
+} else {
+  initGame();
+}
+
+function initGame() {
   // Wait for Kakao Maps API to load
   if (typeof kakao !== 'undefined' && kakao.maps) {
-    initMaps();
-    
-    // Event listeners
-    document.getElementById('submitGuess').addEventListener('click', submitGuess);
-    document.getElementById('nextRound').addEventListener('click', nextRound);
-    document.getElementById('submitGuess').disabled = true;
-    
-    // Update round counter
-    document.getElementById('currentRound').textContent = gameState.currentRound + 1;
+    // Give the DOM a moment to fully render
+    setTimeout(function() {
+      initMaps();
+      
+      // Event listeners
+      document.getElementById('submitGuess').addEventListener('click', submitGuess);
+      document.getElementById('nextRound').addEventListener('click', nextRound);
+      document.getElementById('submitGuess').disabled = true;
+      
+      // Update round counter
+      document.getElementById('currentRound').textContent = gameState.currentRound + 1;
+    }, 100);
   } else {
     console.error('Kakao Maps API not loaded');
     alert('Failed to load Kakao Maps. Please refresh the page.');
   }
-};
+}
