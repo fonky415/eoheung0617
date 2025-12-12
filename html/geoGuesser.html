@@ -6,7 +6,6 @@
   <title>GeoGuesser Challenge</title>
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/geoGuesser.css">
-  <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b99847d06fe001c182a6a3ef8804a0ca"></script>
 </head>
 <body>
   <div class="game-container">
@@ -20,7 +19,7 @@
 
     <div class="game-content">
       <div class="map-container">
-        <div id="roadview"></div>
+        <div id="streetview"></div>
         <div class="location-hint">Where in South Korea am I?</div>
       </div>
 
@@ -53,6 +52,22 @@
           <p class="hint">Enter this code on the home page to unlock Letter 6!</p>
         </div>
         <a href="home.html" class="home-btn">Return to Home</a>
+      </div>
+    </div>
+
+    <div class="api-key-prompt" id="apiKeyPrompt">
+      <div class="prompt-content">
+        <h2>Google Maps API Key Required</h2>
+        <p>To use Street View, you need a Google Maps API key.</p>
+        <ol>
+          <li>Go to <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li>
+          <li>Create a project and enable "Maps JavaScript API"</li>
+          <li>Create credentials and get your API key</li>
+          <li>Paste your API key below:</li>
+        </ol>
+        <input type="text" id="apiKeyInput" placeholder="Enter your Google Maps API key" />
+        <button id="saveApiKey" class="submit-btn">Save & Start Game</button>
+        <p class="note">Your API key will be saved in browser storage for future visits.</p>
       </div>
     </div>
   </div>

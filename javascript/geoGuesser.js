@@ -7,100 +7,141 @@ const gameState = {
   guessLocation: null,
   locations: [
     {
-      name: "N Seoul Tower",
+      name: "N Seoul Tower Area",
       lat: 37.5512,
-      lng: 126.9882,
-      zoom: 2
+      lng: 126.9882
     },
     {
-      name: "Gyeongbokgung Palace",
+      name: "Gyeongbokgung Palace Area",
       lat: 37.5796,
-      lng: 126.9770,
-      zoom: 2
+      lng: 126.9770
     },
     {
-      name: "Haeundae Beach",
+      name: "Haeundae Beach Area",
       lat: 35.1586,
-      lng: 129.1604,
-      zoom: 2
+      lng: 129.1604
     }
   ]
 };
 
-let mainMap, guessMap;
+let panorama, map, sv, apiKey;
 
-// Initialize maps
-function initMaps() {
-  // Ensure containers exist
-  const mainMapContainer = document.getElementById('roadview');
-  const guessMapContainer = document.getElementById('guessMap');
+// Check for saved API key
+function checkApiKey() {
+  apiKey = localStorage.getItem('googleMapsApiKey');
   
-  if (!mainMapContainer || !guessMapContainer) {
-    console.error('Map containers not found');
-    return;
+  if (!apiKey) {
+    document.getElementById('apiKeyPrompt').classList.add('active');
+    document.getElementById('saveApiKey').addEventListener('click', function() {
+      const inputKey = document.getElementById('apiKeyInput').value.trim();
+      if (inputKey) {
+        localStorage.setItem('googleMapsApiKey', inputKey);
+        apiKey = inputKey;
+        document.getElementById('apiKeyPrompt').classList.remove('active');
+        loadGoogleMapsScript();
+      } else {
+        alert('Please enter a valid API key');
+      }
+    });
+  } else {
+    loadGoogleMapsScript();
   }
+}
 
-  // Main map (location to guess) - zoomed in with no controls
+// Load Google Maps script
+function loadGoogleMapsScript() {
+  const script = document.createElement('script');
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initGame`;
+  script.async = true;
+  script.defer = true;
+  script.onerror = function() {
+    alert('Failed to load Google Maps. Please check your API key and try again.');
+    localStorage.removeItem('googleMapsApiKey');
+    location.reload();
+  };
+  document.head.appendChild(script);
+}
+
+// Initialize game
+function initGame() {
+  // Initialize Street View
+  const streetviewContainer = document.getElementById('streetview');
   const currentLocation = gameState.locations[gameState.currentRound];
-  const mainMapOption = {
-    center: new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng),
-    level: currentLocation.zoom,
-    draggable: true,  // Allow panning to explore
-    scrollwheel: true, // Allow zoom
-    disableDoubleClick: false,
-    disableDoubleClickZoom: false
-  };
   
-  mainMap = new kakao.maps.Map(mainMapContainer, mainMapOption);
+  panorama = new google.maps.StreetViewPanorama(streetviewContainer, {
+    position: { lat: currentLocation.lat, lng: currentLocation.lng },
+    pov: { heading: 34, pitch: 10 },
+    zoom: 1,
+    addressControl: false,
+    showRoadLabels: false,
+    zoomControl: true,
+    panControl: true,
+    enableCloseButton: false
+  });
   
-  // Hide map controls for challenge
-  mainMap.setZoomable(true);
-  mainMap.setDraggable(true);
+  // Initialize guess map
+  const mapContainer = document.getElementById('guessMap');
+  map = new google.maps.Map(mapContainer, {
+    center: { lat: 36.5, lng: 127.5 },
+    zoom: 7,
+    mapTypeControl: false
+  });
   
-  // Guess map (for making guesses)
-  const guessMapOption = {
-    center: new kakao.maps.LatLng(36.5, 127.5),
-    level: 13
-  };
+  // Add click listener to guess map
+  map.addListener('click', function(e) {
+    placeGuessMarker(e.latLng);
+  });
   
-  guessMap = new kakao.maps.Map(guessMapContainer, guessMapOption);
+  // Street View service for finding panoramas
+  sv = new google.maps.StreetViewService();
   
-  // Add click event to guess map
-  kakao.maps.event.addListener(guessMap, 'click', function(mouseEvent) {
-    const latlng = mouseEvent.latLng;
-    placeGuessMarker(latlng);
+  // Event listeners
+  document.getElementById('submitGuess').addEventListener('click', submitGuess);
+  document.getElementById('nextRound').addEventListener('click', nextRound);
+  document.getElementById('submitGuess').disabled = true;
+  
+  // Update round counter
+  document.getElementById('currentRound').textContent = gameState.currentRound + 1;
+}
+
+// Load new location
+function loadNewLocation(roundIndex) {
+  const location = gameState.locations[roundIndex];
+  const position = { lat: location.lat, lng: location.lng };
+  
+  // Find nearest Street View panorama
+  sv.getPanorama({ location: position, radius: 50 }, function(data, status) {
+    if (status === 'OK') {
+      panorama.setPano(data.location.pano);
+      panorama.setPov({ heading: 34, pitch: 10 });
+      panorama.setVisible(true);
+    } else {
+      // Fallback to position
+      panorama.setPosition(position);
+    }
   });
 }
 
-// Update main map to new location
-function loadNewLocation(roundIndex) {
-  const location = gameState.locations[roundIndex];
-  const position = new kakao.maps.LatLng(location.lat, location.lng);
-  
-  mainMap.setCenter(position);
-  mainMap.setLevel(location.zoom);
-}
-
 // Place marker on guess map
-function placeGuessMarker(latlng) {
+function placeGuessMarker(latLng) {
   // Remove existing marker
   if (gameState.guessMarker) {
     gameState.guessMarker.setMap(null);
   }
   
   // Create new marker
-  gameState.guessMarker = new kakao.maps.Marker({
-    position: latlng
+  gameState.guessMarker = new google.maps.Marker({
+    position: latLng,
+    map: map
   });
   
-  gameState.guessMarker.setMap(guessMap);
-  gameState.guessLocation = latlng;
+  gameState.guessLocation = latLng;
   
   // Enable submit button
   document.getElementById('submitGuess').disabled = false;
 }
 
-// Calculate distance between two points (Haversine formula)
+// Calculate distance using Haversine formula
 function calculateDistance(lat1, lng1, lat2, lng2) {
   const R = 6371; // Earth's radius in km
   const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -118,8 +159,6 @@ function calculateDistance(lat1, lng1, lat2, lng2) {
 
 // Calculate score based on distance
 function calculateScore(distance) {
-  // Maximum score of 1000 for perfect guess
-  // Score decreases with distance
   const maxDistance = 500; // km
   if (distance > maxDistance) return 0;
   
@@ -132,8 +171,8 @@ function submitGuess() {
   if (!gameState.guessLocation) return;
   
   const currentLocation = gameState.locations[gameState.currentRound];
-  const guessLat = gameState.guessLocation.getLat();
-  const guessLng = gameState.guessLocation.getLng();
+  const guessLat = gameState.guessLocation.lat();
+  const guessLng = gameState.guessLocation.lng();
   
   const distance = calculateDistance(
     currentLocation.lat,
@@ -193,30 +232,5 @@ function showFinalResults() {
   overlay.classList.add('active');
 }
 
-// Initialize game when DOM is fully loaded
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initGame);
-} else {
-  initGame();
-}
-
-function initGame() {
-  // Wait for Kakao Maps API to load
-  if (typeof kakao !== 'undefined' && kakao.maps) {
-    // Give the DOM a moment to fully render
-    setTimeout(function() {
-      initMaps();
-      
-      // Event listeners
-      document.getElementById('submitGuess').addEventListener('click', submitGuess);
-      document.getElementById('nextRound').addEventListener('click', nextRound);
-      document.getElementById('submitGuess').disabled = true;
-      
-      // Update round counter
-      document.getElementById('currentRound').textContent = gameState.currentRound + 1;
-    }, 100);
-  } else {
-    console.error('Kakao Maps API not loaded');
-    alert('Failed to load Kakao Maps. Please refresh the page.');
-  }
-}
+// Start the app
+checkApiKey();
