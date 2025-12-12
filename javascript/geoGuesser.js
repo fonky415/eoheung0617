@@ -7,44 +7,36 @@ const gameState = {
   guessLocation: null,
   locations: [
     {
-      name: "N Seoul Tower",
+      name: "N Seoul Tower Area",
       lat: 37.5512,
-      lng: 126.9882,
-      zoom: 3
+      lng: 126.9882
     },
     {
-      name: "Gyeongbokgung Palace",
+      name: "Gyeongbokgung Palace Area",
       lat: 37.5796,
-      lng: 126.9770,
-      zoom: 3
+      lng: 126.9770
     },
     {
-      name: "Haeundae Beach",
+      name: "Haeundae Beach Area",
       lat: 35.1586,
-      lng: 129.1604,
-      zoom: 3
+      lng: 129.1604
     }
   ]
 };
 
-let mainMap, guessMap;
+let roadview, roadviewClient, guessMap;
 
 // Initialize maps
 function initMaps() {
-  // Main map (location to guess)
-  const mainMapContainer = document.getElementById('mainMap');
-  const currentLocation = gameState.locations[gameState.currentRound];
+  // Initialize Roadview
+  const roadviewContainer = document.getElementById('roadview');
+  roadview = new kakao.maps.Roadview(roadviewContainer);
+  roadviewClient = new kakao.maps.RoadviewClient();
   
-  const mainMapOption = {
-    center: new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng),
-    level: currentLocation.zoom,
-    draggable: false,
-    zoomable: false
-  };
+  // Load first location's roadview
+  loadRoadview(gameState.currentRound);
   
-  mainMap = new kakao.maps.Map(mainMapContainer, mainMapOption);
-  
-  // Guess map (for making guesses)
+  // Initialize guess map
   const guessMapContainer = document.getElementById('guessMap');
   const guessMapOption = {
     center: new kakao.maps.LatLng(36.5, 127.5),
@@ -57,6 +49,28 @@ function initMaps() {
   kakao.maps.event.addListener(guessMap, 'click', function(mouseEvent) {
     const latlng = mouseEvent.latLng;
     placeGuessMarker(latlng);
+  });
+}
+
+// Load roadview for a specific location
+function loadRoadview(roundIndex) {
+  const location = gameState.locations[roundIndex];
+  const position = new kakao.maps.LatLng(location.lat, location.lng);
+  
+  // Get nearest panorama ID and display roadview
+  roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+    if (panoId) {
+      roadview.setPanoId(panoId, position);
+    } else {
+      console.error('No roadview available at this location');
+      // Fallback: try slightly different position
+      const altPosition = new kakao.maps.LatLng(location.lat + 0.001, location.lng + 0.001);
+      roadviewClient.getNearestPanoId(altPosition, 100, function(altPanoId) {
+        if (altPanoId) {
+          roadview.setPanoId(altPanoId, altPosition);
+        }
+      });
+    }
   });
 }
 
@@ -161,11 +175,8 @@ function nextRound() {
   document.getElementById('submitGuess').disabled = true;
   document.getElementById('currentRound').textContent = gameState.currentRound + 1;
   
-  // Update main map to new location
-  const currentLocation = gameState.locations[gameState.currentRound];
-  const newCenter = new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng);
-  mainMap.setCenter(newCenter);
-  mainMap.setLevel(currentLocation.zoom);
+  // Load next location's roadview
+  loadRoadview(gameState.currentRound);
 }
 
 // Show final results
@@ -177,13 +188,19 @@ function showFinalResults() {
 
 // Initialize game
 window.onload = function() {
-  initMaps();
-  
-  // Event listeners
-  document.getElementById('submitGuess').addEventListener('click', submitGuess);
-  document.getElementById('nextRound').addEventListener('click', nextRound);
-  document.getElementById('submitGuess').disabled = true;
-  
-  // Update round counter
-  document.getElementById('currentRound').textContent = gameState.currentRound + 1;
+  // Wait for Kakao Maps API to load
+  if (typeof kakao !== 'undefined' && kakao.maps) {
+    initMaps();
+    
+    // Event listeners
+    document.getElementById('submitGuess').addEventListener('click', submitGuess);
+    document.getElementById('nextRound').addEventListener('click', nextRound);
+    document.getElementById('submitGuess').disabled = true;
+    
+    // Update round counter
+    document.getElementById('currentRound').textContent = gameState.currentRound + 1;
+  } else {
+    console.error('Kakao Maps API not loaded');
+    alert('Failed to load Kakao Maps. Please refresh the page.');
+  }
 };
