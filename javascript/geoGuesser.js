@@ -7,54 +7,57 @@ const gameState = {
   guessLocation: null,
   locations: [
     {
-      name: "N Seoul Tower Area",
+      name: "N Seoul Tower",
       lat: 37.5512,
-      lng: 126.9882
+      lng: 126.9882,
+      zoom: 2
     },
     {
-      name: "Gyeongbokgung Palace Area",
+      name: "Gyeongbokgung Palace",
       lat: 37.5796,
-      lng: 126.9770
+      lng: 126.9770,
+      zoom: 2
     },
     {
-      name: "Haeundae Beach Area",
+      name: "Haeundae Beach",
       lat: 35.1586,
-      lng: 129.1604
+      lng: 129.1604,
+      zoom: 2
     }
   ]
 };
 
-let roadview, roadviewClient, guessMap;
+let mainMap, guessMap;
 
 // Initialize maps
 function initMaps() {
-  // Ensure container exists
-  const roadviewContainer = document.getElementById('roadview');
-  if (!roadviewContainer) {
-    console.error('Roadview container not found');
+  // Ensure containers exist
+  const mainMapContainer = document.getElementById('roadview');
+  const guessMapContainer = document.getElementById('guessMap');
+  
+  if (!mainMapContainer || !guessMapContainer) {
+    console.error('Map containers not found');
     return;
   }
 
-  // Initialize Roadview with explicit options
-  const rvOptions = {
-    panoId: 0,
-    panoX: 0,
-    panoY: 0
+  // Main map (location to guess) - zoomed in with no controls
+  const currentLocation = gameState.locations[gameState.currentRound];
+  const mainMapOption = {
+    center: new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng),
+    level: currentLocation.zoom,
+    draggable: true,  // Allow panning to explore
+    scrollwheel: true, // Allow zoom
+    disableDoubleClick: false,
+    disableDoubleClickZoom: false
   };
   
-  roadview = new kakao.maps.Roadview(roadviewContainer, rvOptions);
-  roadviewClient = new kakao.maps.RoadviewClient();
+  mainMap = new kakao.maps.Map(mainMapContainer, mainMapOption);
   
-  // Load first location's roadview
-  loadRoadview(gameState.currentRound);
+  // Hide map controls for challenge
+  mainMap.setZoomable(true);
+  mainMap.setDraggable(true);
   
-  // Initialize guess map
-  const guessMapContainer = document.getElementById('guessMap');
-  if (!guessMapContainer) {
-    console.error('Guess map container not found');
-    return;
-  }
-  
+  // Guess map (for making guesses)
   const guessMapOption = {
     center: new kakao.maps.LatLng(36.5, 127.5),
     level: 13
@@ -69,29 +72,13 @@ function initMaps() {
   });
 }
 
-// Load roadview for a specific location
-function loadRoadview(roundIndex) {
+// Update main map to new location
+function loadNewLocation(roundIndex) {
   const location = gameState.locations[roundIndex];
   const position = new kakao.maps.LatLng(location.lat, location.lng);
   
-  // Get nearest panorama ID and display roadview
-  roadviewClient.getNearestPanoId(position, 50, function(panoId) {
-    if (panoId) {
-      roadview.setPanoId(panoId, position);
-    } else {
-      console.log('No roadview found within 50m, trying larger radius...');
-      // Fallback: try slightly different position with larger radius
-      roadviewClient.getNearestPanoId(position, 200, function(altPanoId) {
-        if (altPanoId) {
-          roadview.setPanoId(altPanoId, position);
-        } else {
-          console.error('No roadview available at this location');
-          alert('No street view available for this location. Skipping to next round.');
-          nextRound();
-        }
-      });
-    }
-  });
+  mainMap.setCenter(position);
+  mainMap.setLevel(location.zoom);
 }
 
 // Place marker on guess map
@@ -195,8 +182,8 @@ function nextRound() {
   document.getElementById('submitGuess').disabled = true;
   document.getElementById('currentRound').textContent = gameState.currentRound + 1;
   
-  // Load next location's roadview
-  loadRoadview(gameState.currentRound);
+  // Load next location
+  loadNewLocation(gameState.currentRound);
 }
 
 // Show final results
