@@ -1,6 +1,6 @@
 # eoheung0617
 
-A birthday website featuring interactive quizzes, personality tests, and letter collection pages.
+A website for Jinny featuring interactive quizzes, personality tests, and letter collection pages.
 
 ## Project Structure
 
