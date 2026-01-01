@@ -3,7 +3,7 @@
   const utils = loveSite.utils;
   if (!utils) return;
 
-  const START_DATE = "2025-06-17T00:00:00";
+  const START_DATE = "2025-06-16T00:00:00+09:00";
 
   function initConfetti() {
     if (typeof window.confetti !== "function") return;
