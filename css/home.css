@@ -2,8 +2,18 @@
   text-align: center;
 }
 
-.home-page header.container img {
+.photo-gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
   margin-bottom: 24px;
+}
+
+.gallery-img {
+  height: 300px;
+  width: auto;
+  object-fit: cover;
 }
 
 .home-page h1 {
