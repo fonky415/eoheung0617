@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Crossword Puzzle</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/crossword.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🧩 Interactive Crossword Puzzle</h1>
+        
+        <div class="content-wrapper">
+            <div class="puzzle-container">
+                <div class="crossword" id="crossword"></div>
+                
+                <div class="buttons">
+                    <button class="check-btn" onclick="checkAnswers()">✓ Check</button>
+                    <button class="reset-btn" onclick="resetPuzzle()">↻ Reset</button>
+                    <button class="reveal-btn" onclick="revealAnswers()">💡 Reveal</button>
+                </div>
+                
+                <div class="message" id="message"></div>
+            </div>
+
+            <div class="clues">
+                <div class="clue-section">
+                    <h2>Across</h2>
+                    <div class="clue" data-word="4-across" onclick="highlightWord('4-across')">
+                        <strong>4.</strong> Large marsupial
+                    </div>
+                    <div class="clue" data-word="5-across" onclick="highlightWord('5-across')">
+                        <strong>5.</strong> Likes to chase mice
+                    </div>
+                </div>
+
+                <div class="clue-section">
+                    <h2>Down</h2>
+                    <div class="clue" data-word="1-down" onclick="highlightWord('1-down')">
+                        <strong>1.</strong> Has a trunk
+                    </div>
+                    <div class="clue" data-word="2-down" onclick="highlightWord('2-down')">
+                        <strong>2.</strong> Flying mammal
+                    </div>
+                    <div class="clue" data-word="3-down" onclick="highlightWord('3-down')">
+                        <strong>3.</strong> Man's best friend
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="back-button-container">
+            <a href="home.html" class="back-btn">← Back to Home</a>
+        </div>
+    </div>
+
+    <script src="../javascript/crossword.js"></script>
+</body>
+</html>
