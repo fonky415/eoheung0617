@@ -1,0 +1,244 @@
+/* Crossword Grid Styles - Essential Only */
+
+/* Hide the red input field visually but keep it functional */
+#hidden-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  border: none;
+  background: none;
+}
+
+/* SVG Cell Styling */
+g rect {
+  fill: #ffffff;
+  stroke-width: 1;
+  stroke: #000001;
+  fill-opacity: 1;
+  pointer-events: auto;
+}
+
+/* SVG Groups - allow clicks */
+g {
+  pointer-events: auto;
+}
+
+/* Cell numbering */
+.cx-c {
+  font-size: 12px;
+  font-family: monospace;
+  pointer-events: none;
+  font-weight: bold;
+  fill: #000002;
+  text-anchor: start;
+}
+
+/* Cell letters */
+.cx-a {
+  font-size: 22px;
+  font-family: monospace;
+  text-anchor: middle;
+  pointer-events: none;
+  fill: #000003;
+}
+
+/* Black cells */
+.cx-b {
+  fill: #000004;
+}
+
+/* Highlighted cells - light grey */
+.highlighted rect {
+  fill: #e0e0e0;
+  pointer-events: auto;
+}
+
+/* Active cell (current typing position) - darker grey */
+g.active rect {
+  fill: #c8c8c8;
+  pointer-events: auto;
+}
+
+/* Container for crossword grid */
+#crossword {
+  margin: 20px auto;
+  text-align: center;
+}
+
+#crossword svg {
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* Clues section - compact layout */
+#clues-bar {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+#clues {
+  display: flex;
+  gap: 30px;
+}
+
+#across-box, #down-box {
+  flex: 1;
+  min-width: 280px;
+}
+
+#across-box h5, #down-box h5 {
+  margin: 0 0 8px 0;
+  font-size: 0.95em;
+  font-weight: bold;
+}
+
+#across, #down {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#across li, #down li {
+  padding: 4px 6px;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.15s;
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+
+#across li:hover, #down li:hover {
+  background-color: #f5f5f5;
+}
+
+#across li.highlighted, #down li.highlighted {
+  background-color: #e8f4f8;
+  font-weight: bold;
+}
+
+/* Page header */
+#page-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 15px 0;
+}
+
+#page-title {
+  font-size: 1.6em;
+  font-weight: bold;
+  margin: 0 0 6px 0;
+  color: #111;
+}
+
+#page-caption {
+  font-size: 0.95em;
+  color: #555;
+  margin: 0 0 10px 0;
+  font-style: italic;
+}
+
+#time-tracker {
+  font-size: 0.9em;
+  color: #555;
+  margin: 8px 0;
+  font-family: monospace;
+}
+
+#time-display {
+  font-weight: bold;
+  color: #111;
+  font-family: monospace;
+}
+
+/* Control buttons */
+#button-container {
+  text-align: center;
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  padding: 8px 16px;
+  font-size: 0.9em;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: "SF Mono", monospace;
+}
+
+.control-btn:hover {
+  background-color: #333;
+}
+
+.control-btn:active {
+  background-color: #000;
+}
+
+/* Completion message */
+#completion-message {
+  text-align: center;
+  padding: 30px;
+  margin-top: 40px;
+  background-color: #f5f5f5;
+  border: 2px solid #111;
+  border-radius: 4px;
+  animation: slideUp 0.5s ease-out;
+}
+
+#completion-text {
+  font-size: 2em;
+  color: #111;
+  margin: 0 0 15px 0;
+  font-weight: bold;
+}
+
+#secret-code {
+  font-size: 1.2em;
+  color: #111;
+  margin: 0;
+  font-family: monospace;
+  background-color: #fff9e6;
+  padding: 15px;
+  border-radius: 4px;
+  display: inline-block;
+  border: 1px solid #e8e8e8;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #clues {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  #page-title {
+    font-size: 1.5em;
+  }
+  
+  #completion-text {
+    font-size: 1.5em;
+  }
+}
