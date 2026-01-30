@@ -212,23 +212,5 @@ function resetPuzzle() {
     currentWord = null;
 }
 
-function revealAnswers() {
-    for (let word in wordPositions) {
-        const positions = wordPositions[word];
-        const answer = answers[word].toUpperCase();
-        
-        positions.forEach((pos, index) => {
-            const input = document.querySelector(`input[data-row="${pos[0]}"][data-col="${pos[1]}"]`);
-            if (input) {
-                input.value = answer[index];
-            }
-        });
-    }
-    
-    const message = document.getElementById('message');
-    message.textContent = '💡 All answers revealed!';
-    message.className = 'message success';
-}
-
 // Initialize the grid on page load
 createGrid();
