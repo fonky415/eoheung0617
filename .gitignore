@@ -1,4 +1,4 @@
-# Gitignore for LoveSite
+# Gitignore
 # Node modules
 node_modules/
 npm-debug.log
