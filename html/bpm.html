@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BPM Game</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/bpm.css">
+</head>
+<body>
+  <main class="container bpm-game">
+    <h1>Chest Compression Training</h1>
+
+    <div class="bpm-container">
+      <!-- Instructions -->
+      <div id="instructionArea" class="instruction-area">
+        <p class="instruction-text">There is a non-zero chance that I might collapse from a heart attack when I see you in April. To make sure you remember the right timing for the chest compressions, press your spacebar at the same speed at which you would do the chest compressions. My life is in your hands GOOD LUCK</p>
+        <button id="startBtn" class="btn btn-start">Start</button>
+      </div>
+
+      <!-- Game Area -->
+      <div id="gameArea" class="game-area" style="display: none;">
+        <div id="countdown" class="countdown"></div>
+      </div>
+
+      <!-- Results -->
+      <div id="result" class="result" style="display: none;">
+        <div id="resultMessage" class="result-message"></div>
+        <div id="passwordDisplay" class="password-display" style="display: none;">
+          <p>Access code:</p>
+          <input type="text" id="passwordInput" readonly value="important" />
+        </div>
+        <button id="restartBtn" class="btn" style="display: none;">Try Again</button>
+        <a href="home.html" id="homeBtn" class="btn btn-home" style="display: none;">Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="../javascript/utils.js" defer></script>
+  <script src="../javascript/bpm.js" defer></script>
+</body>
+</html>

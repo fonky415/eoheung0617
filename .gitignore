@@ -1,0 +1,37 @@
+# Gitignore for LoveSite
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE & Editor
+.vscode/
+.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build artifacts
+dist/
+build/
+*.bundle.js
+*.min.js
+*.min.css
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+.cache/
+.temp/
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
