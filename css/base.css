@@ -26,6 +26,11 @@ header.container img {
   margin: 40px auto;
 }
 
+header.container .mm-columns__img {
+  margin: 0 0 10px 0;
+  display: block;
+}
+
 /* Center images that appear in main content areas */
 main img {
   display: block;

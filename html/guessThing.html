@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Guess the Thing</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/textGuess.css">
+  <link rel="stylesheet" href="../css/guessThing.css">
+</head>
+<body>
+  <main class="container">
+    <section class="slide intro-slide" data-slide="intro">
+      <header class="page-header">
+        <h1>Guess the Thing</h1>
+      </header>
+      <div class="intro-copy">
+        <p>You say you really want them…but can you actually identify what they are.?? An hyperrealistic drawing will appear on the screen and YOU must type what it is. If you can tell me what all of them are, then perhaps it’ll show me that you know your stuff and realllly want it…</p>
+      </div>
+      <button type="button" id="proceedBtn" class="primary-btn">Proceed</button>
+    </section>
+
+    <section class="slide question-slide" data-slide="question" hidden>
+      <div class="drawing-card">
+        <div class="drawing-frame">
+          <img id="drawingImage" src="" alt="Guess the drawing" class="drawing-image" />
+        </div>
+        <div class="drawing-meta">
+          <p id="drawingCounter" class="drawing-counter">Drawing 1 of 6</p>
+        </div>
+      </div>
+
+      <section class="chat-card question-block">
+        <p id="questionText" class="question-text">What is this?</p>
+        <form id="answerForm" class="frq-form">
+          <label class="sr-only" for="answerInput">Type your guess</label>
+          <input id="answerInput" type="text" autocomplete="off" class="frq-input" placeholder="Type your answer" />
+          <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+        <div class="actions">
+          <button type="button" id="nextBtn" class="next-btn" hidden>Next ➜</button>
+        </div>
+      </section>
+    </section>
+
+    <section id="completionCard" class="chat-card completion-card" hidden>
+      <h2>you DID IT!!</h2>
+      <p>The code is: <strong>blessed</strong></p>
+      <div class="completion-actions">
+        <a class="primary-btn" href="home.html">Back to Home</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="../javascript/letter9.js" defer></script>
+</body>
+</html>
