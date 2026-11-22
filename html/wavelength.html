@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wavelength</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/letter10.css">
+</head>
+<body>
+  <main class="container wavelength-game">
+    <section class="game-screen intro-screen" id="introScreen">
+      <p class="eyebrow">Letter 10</p>
+      <h1>long distances in numbers</h1>
+      <p>place the pin within the warm to proceed! If you get it wrong, you need to restart so 신중히 정하시세용</p>
+      <button type="button" class="game-button" id="startButton">Start</button>
+    </section>
+
+    <section class="game-screen round-screen" id="roundScreen" hidden>
+      <p class="eyebrow" id="roundProgress"></p>
+      <h1 id="questionText"></h1>
+      <div class="dial">
+        <svg
+          id="dialSvg"
+          class="dial-svg"
+          viewBox="0 0 360 245"
+          role="group"
+          aria-label="Wavelength dial"
+        >
+          <defs>
+            <clipPath id="dialFaceClip">
+              <path d="M 42 218 A 138 138 0 0 1 318 218 L 42 218 Z" />
+            </clipPath>
+          </defs>
+
+          <g class="rainbow-backdrop" aria-hidden="true">
+            <path d="M -24 218 A 204 204 0 0 1 384 218" stroke="#55aeb0" />
+            <path d="M -14 218 A 194 194 0 0 1 374 218" stroke="#74a875" />
+            <path d="M -4 218 A 184 184 0 0 1 364 218" stroke="#e9a05f" />
+            <path d="M 6 218 A 174 174 0 0 1 354 218" stroke="#d78595" />
+            <path d="M 16 218 A 164 164 0 0 1 344 218" stroke="#f4ead5" />
+          </g>
+
+          <path class="dial-ring" d="M 28 218 A 152 152 0 0 1 332 218" />
+          <path class="scallop-border" d="M 26 218 A 154 154 0 0 1 334 218" />
+          <path class="dial-face" d="M 42 218 A 138 138 0 0 1 318 218 L 42 218 Z" />
+          <rect class="night-sky" x="30" y="142" width="300" height="76" clip-path="url(#dialFaceClip)" />
+          <g class="dial-stars" aria-hidden="true">
+            <circle cx="72" cy="177" r="2" />
+            <circle cx="96" cy="197" r="1.5" />
+            <circle cx="119" cy="163" r="1.5" />
+            <circle cx="143" cy="188" r="2" />
+            <circle cx="168" cy="157" r="1.5" />
+            <circle cx="194" cy="184" r="1.5" />
+            <circle cx="219" cy="164" r="2" />
+            <circle cx="245" cy="198" r="1.5" />
+            <circle cx="271" cy="176" r="2" />
+            <circle cx="293" cy="192" r="1.5" />
+            <circle cx="89" cy="164" r="1" />
+            <circle cx="230" cy="197" r="1" />
+          </g>
+          <g id="scoreWedges" class="score-wedges" clip-path="url(#dialFaceClip)" hidden></g>
+
+          <g
+            id="needleControl"
+            class="needle-control"
+            role="slider"
+            tabindex="0"
+            aria-labelledby="questionText"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="50"
+            aria-valuetext="50"
+          >
+            <line id="needleHitTarget" class="needle-hit-target" x1="180" y1="218" x2="180" y2="88" />
+            <line id="needle" class="needle" x1="180" y1="218" x2="180" y2="88" />
+            <circle id="dialHandle" class="dial-handle" cx="180" cy="73" r="11" />
+            <g id="valueBubble" class="value-bubble" transform="translate(180 80)">
+              <rect x="-52" y="-39" width="104" height="30" rx="15" />
+              <text id="valueText" x="0" y="-19" text-anchor="middle"></text>
+            </g>
+          </g>
+          <circle class="dial-hub" cx="180" cy="218" r="17" aria-hidden="true" />
+        </svg>
+        <div class="dial-endpoints" aria-hidden="true">
+          <span id="minimumLabel"></span>
+          <span id="maximumLabel"></span>
+        </div>
+      </div>
+      <button type="button" class="game-button" id="confirmButton">Submit</button>
+      <p class="round-feedback" id="roundFeedback" role="status" aria-live="polite"></p>
+      <button type="button" class="game-button" id="nextButton" hidden>Next</button>
+    </section>
+
+    <section class="game-screen miss-screen" id="missScreen" hidden>
+      <p class="round-feedback" role="status" aria-live="polite">Not quite, let's start from the beginning</p>
+      <button type="button" class="game-button" id="retryButton">Try again</button>
+    </section>
+
+    <section class="game-screen win-screen" id="winScreen" hidden>
+      <p class="eyebrow">Letter 10</p>
+      <h1>You did it!</h1>
+      <button type="button" class="game-button" id="quizButton">Continue</button>
+    </section>
+
+  </main>
+
+  <script src="../javascript/letter10.js" defer></script>
+</body>
+</html>

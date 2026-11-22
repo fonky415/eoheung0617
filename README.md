@@ -15,8 +15,8 @@ Contains all the website pages organized by feature:
 - `home.html` - Home page
 - `imnotarobot.html` - Robot verification page
 
-#### Letter Pages
-- `letter1.html` through `letter5.html` - Five sequential letter pages
+#### Letter Pages and Games
+- `letter1.html` through `letter10.html` - Sequential letter pages and the Letter 10 wavelength game
 
 #### Quiz Pages
 - `composerQuiz.html` - Classical composer identification quiz

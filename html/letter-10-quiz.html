@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Letter 10 Quiz</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: #171611;
+      background: #fff;
+      font-family: "SF Mono", monospace;
+      line-height: 1.65;
+    }
+    button, a { font: inherit; }
+    .quiz-page {
+      width: min(100% - 32px, 860px);
+      margin: 36px auto 64px;
+    }
+    .quiz-header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #777064;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+    .progress {
+      position: sticky;
+      z-index: 2;
+      top: 0;
+      margin: 0 -16px 20px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e3dfd5;
+      background: rgba(255, 255, 255, 0.96);
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .progress-track {
+      width: min(100%, 440px);
+      height: 7px;
+      margin: 7px auto 0;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #eeeae2;
+    }
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: #7da77d;
+      transition: width 0.2s ease;
+    }
+    .cards {
+      display: grid;
+      gap: 14px;
+    }
+    .quiz-card, .finish-card {
+      padding: 22px;
+      border: 1px solid #e3dfd5;
+      border-radius: 16px;
+      background: #fcfbf8;
+    }
+    .quiz-card.is-complete {
+      border-color: #b6c8ac;
+    }
+    .date {
+      display: block;
+      margin-bottom: 10px;
+      color: #777064;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+    .question, .note-text {
+      margin: 0;
+      font-size: 1rem;
+      overflow-wrap: anywhere;
+    }
+    .answer {
+      margin: 18px 0 0;
+      padding: 14px;
+      border-left: 3px solid #7da77d;
+      background: #f2f4ee;
+      overflow-wrap: anywhere;
+    }
+    .answer[hidden], .self-check[hidden], .finish-card[hidden] {
+      display: none;
+    }
+    .card-actions, .self-check {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .quiz-button, .home-button {
+      display: inline-block;
+      padding: 9px 16px;
+      border: 1px solid #bdb5a5;
+      border-radius: 8px;
+      background: #fff;
+      color: #171611;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .quiz-button:hover, .home-button:hover {
+      border-color: #6d6557;
+      background: #f2efe8;
+    }
+    .quiz-button[aria-pressed="true"] {
+      border-color: #6e8d68;
+      background: #e8eee3;
+    }
+    .quiz-button:focus-visible, .home-button:focus-visible {
+      outline: 3px solid #806c99;
+      outline-offset: 3px;
+    }
+    .finish-card {
+      margin-top: 24px;
+      text-align: center;
+    }
+    .finish-card h2 {
+      font-size: clamp(1.2rem, 4vw, 1.6rem);
+    }
+    .finish-password {
+      margin: 18px 0;
+      padding: 14px;
+      border: 1px solid #e3dfd5;
+      border-radius: 10px;
+      background: #fff;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    @media (max-width: 600px) {
+      .quiz-page { margin-top: 24px; }
+      .quiz-card, .finish-card { padding: 18px; }
+      .quiz-button, .home-button { min-height: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="quiz-page">
+    <header class="quiz-header">
+      <p class="eyebrow">Letter 10</p>
+      <h1>Our little memories</h1>
+      <p>One card at a time hehe</p>
+    </header>
+
+    <div class="progress" role="status" aria-live="polite">
+      <span id="progressText">0 / 0 completed</span>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <section class="cards" id="cards" aria-label="Memory quiz cards"></section>
+
+    <section class="finish-card" id="finishCard" aria-live="polite" hidden>
+      <p id="gotItCount"></p>
+      <h2>YOU GOT THROUGH EVERYTHING CONGRATSSS now put this password in the home page to reveal my 10th letter!!</h2>
+      <p class="finish-password" id="finishPassword"></p>
+      <a class="home-button" href="home.html">Go to home page</a>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const PASSWORD = 'jinny';
+      const debugMode = new URLSearchParams(window.location.search).get('debug') === '1';
+      const cards = [
+        { type: 'Q', date: '2025-06-17', question: 'What plant did I buy you?', answer: '스킨답서스' },
+        { type: 'Q', date: '2025-06-19', question: 'First what today?', answer: 'Kiss' },
+        { type: 'Q', date: '2025-06-21', question: 'Which movie did we watch in 벌툰?', answer: 'Annabelle' },
+        { type: 'Q', date: '2025-07-02', question: 'Which room cafe did we go?', answer: 'White castle' },
+        { type: 'Q', date: '2025-07-03', question: 'Did we have penetrative sex at this motel?', answer: 'No, just oral' },
+        { type: 'Q', date: '2025-07-25', question: 'What gift did you get my aunt from UK?', answer: 'Tea set' },
+        { type: 'Q', date: '2025-07-30', question: "I tried to do what for Priyam's birthday?", answer: 'Embroidery' },
+        { type: 'Q', date: '2025-08-01', question: 'After practicing piano, we ate what for dinner?', answer: '칼국수' },
+        { type: 'Q', date: '2025-08-06', question: 'Which boardgame did you, me, Priyam, Jinu, and Chris play?', answer: 'Catan' },
+        { type: 'Q', date: '2025-08-09', question: 'Why is this day a pretty big day?', answer: 'My 독주회' },
+        { type: 'Q', date: '2025-08-11', question: 'This day was our first what?', answer: 'Penetrative sex' },
+        { type: 'Q', date: '2025-08-13', question: 'What did you look at very specifically when we went to 현백?', answer: 'Sunglasses' },
+        { type: 'Q', date: '2025-08-14', question: 'We ate poke for lunch. What did we have for dinner? (hint: protein)', answer: '보쌈' },
+        { type: 'Q', date: '2025-08-19', question: 'When we went to 시흥시장, which drink did we spill (be specific)?', answer: 'Iced latte' },
+        { type: 'Q', date: '2025-08-21', question: "When you had my mum's lunch, what food did you have?", answer: '족발해파리냉채' },
+        { type: 'Q', date: '2025-08-23', question: 'Which movie did we watch at White Castle?', answer: 'Demon Slayer: Kimetsu no Yaiba – The Movie: Mugen Train' },
+        { type: 'N', date: '2025-08-27', question: 'You wore a croptop and sunglasses and looked HELLA pretty apparently. Just saying.' },
+        { type: 'Q', date: '2025-08-28', question: 'I ate dinner with your mum on this day. What did we have?', answer: '장어' },
+        { type: 'Q', date: '2025-08-30', question: 'What brand hoodie did I buy at 시흥아울렛?', answer: 'Brown Breath' },
+        { type: 'Q', date: '2025-09-02', question: 'We went to 한강 and ate 김밥 on this day. We met someone from KIS too, who was it?', answer: 'Annette' },
+        { type: 'Q', date: '2025-09-03', question: 'We were going to make our rings but all of them were closed. We instead went to an escape room. What dropped from the ceiling?', answer: 'Mannequin ghost' },
+        { type: 'Q', date: '2025-09-05', question: 'After coming back home from the farm, what did you and my mum help me do?', answer: 'Pack clothes' },
+        { type: 'Q', date: '2025-09-09', question: 'What was the name of the 장어 place we ate at?', answer: '해목' },
+        { type: 'Q', date: '2025-12-13', question: 'Whose birthday was it?', answer: "My girlfriend's" },
+        { type: 'Q', date: '2025-12-14', question: 'What color doritos did you gift Daniel?', answer: 'Blue' },
+        { type: 'Q', date: '2025-12-15', question: 'We came how many times?', answer: '3' },
+        { type: 'Q', date: '2025-12-16', question: 'Who won the skating races?', answer: 'Me' },
+        { type: 'Q', date: '2025-12-20', question: 'Which movie did we watch?', answer: 'Avatar 3' },
+        { type: 'Q', date: '2025-12-22', question: 'For dinner we ate 삼계탕 and what?', answer: '양념계장' },
+        { type: 'Q', date: '2025-12-23', question: 'We got drunk together. What was our 안주?', answer: '전' },
+        { type: 'Q', date: '2025-12-25', question: 'Where did we go?', answer: '고터' },
+        { type: 'Q', date: '2025-12-26', question: 'I stalked you and Susie in which district in Seoul?', answer: '성수' },
+        { type: 'Q', date: '2025-12-27', question: 'We played what game that we were both ASS at?', answer: 'Pool' },
+        { type: 'Q', date: '2026-01-02', question: 'Which two places did we go for the first time?', answer: '노래방 & photo booth' },
+        { type: 'Q', date: '2026-01-03', question: 'What very physically intense game did we play?', answer: 'Tagrun' },
+        { type: 'N', date: '2026-01-04', question: 'Last day before you leave.. your 202 day anniversary letter was beautiful. There\'s no quiz for this I love you so much' },
+        { type: 'Q', date: '2026-04-11', question: 'First day of San Diego trip!! You ordered Chipotle for me which was just absolute heaven. Which movie did we watch that first night?', answer: 'Quiet Place' },
+        { type: 'Q', date: '2026-04-12', question: 'After church, we ate Mexican food and did the 맞춤법 contest. Who won?', answer: 'Jinny' },
+        { type: 'Q', date: '2026-04-13', question: 'Name one piece you learned on the piano with me in the practice room.', answer: "Twinkle twinkle little star and salut d'amour" },
+        { type: 'Q', date: '2026-04-14', question: "Which part of me did you cut today? (ik this is bad question I DIDN'T KNOW WHAT TO ASK)", answer: 'My hair' },
+        { type: 'Q', date: '2026-04-15', question: 'What is the name of the perfume you bought me?', answer: 'Blackberry and Bay' },
+        { type: 'Q', date: '2026-04-16', question: 'We did a picnic in what park?', answer: 'Kate Memorial Park' },
+        { type: 'Q', date: '2026-04-17', question: 'I was being a cranky little kid on this day. We played what sport?', answer: 'Table tennis' },
+        { type: 'Q', date: '2026-04-18', question: "We watched the performance in the Conrad Prebys Performing Arts Center. What's the name of the trumpet player?", answer: 'Benny Benack III' },
+        { type: 'Q', date: '2026-04-19', question: 'There was a power outage where?', answer: 'UTC' },
+        { type: 'Q', date: '2026-04-20', question: 'We went to the beach and you and I nearly DIED. We did have 라면 for dinner, which 라면?', answer: '감자면' },
+        { type: 'Q', date: '2026-04-21', question: 'omg we played the 신서유기 games this day and it was so much fun. Who won literally every single stupid game?', answer: 'Jinny' },
+        { type: 'N', date: '2026-04-22', question: 'erm I 쓰다 말았어. You took midterms I think. No question ㅎ' },
+        { type: 'N', date: '2026-04-23', question: 'no file for this day??? we probably said goodbye at the airport.?' },
+        { type: 'Q', date: '2026-06-15', question: 'While I was studying, what treat did you buy me?', answer: 'YOCHI' },
+        { type: 'Q', date: '2026-06-16', question: 'This morning, you did one of my favorite love languages for me. What was it?', answer: 'Doing the dishes' },
+        { type: 'Q', date: '2026-06-17', question: 'What tea did you bring me?', answer: 'Jasmine tea' },
+        { type: 'Q', date: '2026-06-18', question: 'What leaf-ed clover did you find on this day (how many leaves)?', answer: 'Six-leafed clover' },
+        { type: 'Q', date: '2026-06-19', question: 'I accidentally called you a friend instead of girlfriend during church. Quiz: will Phillip ever do this again?', answer: 'No' },
+        { type: 'Q', date: '2026-06-20', question: 'Praise night! Who did we eat dinner with?', answer: 'Toby' },
+        { type: 'Q', date: '2026-06-21', question: 'What day of the week was it?', answer: 'Sunday' },
+        { type: 'Q', date: '2026-06-22', question: 'What was your 1-year-anniversary gift?', answer: 'Fluffy pajamas' },
+        { type: 'Q', date: '2026-06-23', question: 'Breakfast was special today. What did you make us?', answer: 'English breakfast' },
+        { type: 'Q', date: '2026-06-24', question: 'I drank a piccolo coffee. You got tea. Which tea?', answer: 'Chai tea' },
+        { type: 'Q', date: '2026-06-25', question: 'What did we eat at the Curtain Jazz Club?', answer: 'Sushi' },
+        { type: 'Q', date: '2026-06-26', question: 'With the rice cooker, what did we make today?', answer: 'Castella' },
+        { type: 'Q', date: '2026-06-27', question: 'BEAUTIFUL ass day with 예준 do you remember?? True or false: for dinner, we ate 라면 for dinner.', answer: 'False; we ate at 1917 Lanzhaou beef noodles' },
+        { type: 'Q', date: '2026-06-28', question: 'Which SCARY movie did we watch?', answer: 'Midsommar' },
+        { type: 'Q', date: '2026-06-29', question: 'What is the antibiotic for the STI called?', answer: 'Nitrofurantoin, 100mg' },
+        { type: 'Q', date: '2026-06-30', question: 'True or false: it is normal to have a bit of pink discharge when taking nitrofurantoin.', answer: 'True (according to the pharmacist we called)' },
+        { type: 'Q', date: '2026-07-01', question: 'Which bread did we make?', answer: 'Baguettes' },
+        { type: 'Q', date: '2026-07-02', question: 'At Sydney Olympic Park, we raced in what field (name of sport)?', answer: 'Cricket' },
+        { type: 'Q', date: '2026-07-03', question: 'What is the name of the market we went to?', answer: "Paddy's Flemington Market" },
+        { type: 'Q', date: '2026-07-04', question: 'We went hiking with the church people to which mountain?', answer: 'Blue Mountains' },
+        { type: 'Q', date: '2026-07-05', question: 'last day :((( What is the number of the bus we took to the airport?', answer: '420' },
+        { type: 'Q', date: '2026-08-26', question: 'Did we eat outside or get delivery?', answer: 'Delivery ㅎㅎ' },
+        { type: 'Q', date: '2026-08-27', question: 'How many bars of IKEA chocolate did we buy?', answer: '3' },
+        { type: 'Q', date: '2026-08-28', question: 'After the DEEP clean of my room, which country\'s cuisine did we order?', answer: 'Turkish' },
+        { type: 'Q', date: '2026-08-29', question: 'According to your words, "Phillip is the best boyfriend in the whole entire world because he let his girlfriend sleep in while he did [blank] for us and I love him very very much cuz he\'s such an amazing person."', answer: 'ALL of our laundry' },
+        { type: 'Q', date: '2026-08-30', question: 'How many points did I get in bowling?', answer: '159' },
+        { type: 'N', date: '2026-08-31', question: "I JUST checked my Instagram again to make sure I didn't somehow mute you again SKIP QUESTION" },
+        { type: 'Q', date: '2026-09-01', question: 'We worked out and did a bet with a machine. Which machine?', answer: 'Leg press' },
+        { type: 'Q', date: '2026-09-02', question: 'We did the review in Doodee King and got what for free?', answer: 'Thai milk tea' },
+        { type: 'Q', date: '2026-09-03', question: 'What is "my legs hurt" in Japanese?', answer: '足が痛い (ashigatai)' },
+        { type: 'Q', date: '2026-09-04', question: 'We went to Elizabeth Park and read which Roald Dahl book?', answer: 'The Ladlady' },
+        { type: 'Q', date: '2026-09-05', question: 'We went to Kmart and bought which two things?', answer: 'Aurora powder & kite' },
+        { type: 'Q', date: '2026-09-06', question: 'At Burwood Chinatown, we got the grilled corn, Chinese skewers, a souffle, and what?', answer: 'Egg waffle' },
+        { type: 'Q', date: '2026-09-07', question: 'Train to Goulburn! Dinner we ate what?', answer: '라면 + four sausages' },
+        { type: 'Q', date: '2026-09-08', question: 'Which kitchen utensil consumed much of the evening that night?', answer: 'SPATULA' },
+        { type: 'Q', date: '2026-09-09', question: 'True or false: Phillip perfectly flipped the hash browns with the pan.', answer: 'False' },
+        { type: 'Q', date: '2026-09-10', question: 'True or false: we had sex right coming home from the Carrick Trip.', answer: 'Of course true' },
+        { type: 'Q', date: '2026-09-11', question: 'Which Disney movie did we watch?', answer: 'Hercules' },
+        { type: 'Q', date: '2026-09-12', question: 'We "accidentally" shoplifted what from woolies?', answer: 'Lettuce and tortillas' },
+        { type: 'Q', date: '2026-09-13', question: "What was Yejun's essay topic?", answer: 'AI in film industry' },
+        { type: 'Q', date: '2026-09-14', question: 'Went to Coogee beach and ate what food?', answer: 'Fish and chips' },
+        { type: 'Q', date: '2026-09-15', question: 'Last day ㅜㅜㅜㅜ but for the last meal we ate.??', answer: '짜파게티' },
+      ];
+      const states = cards.map(() => ({ complete: false, gotIt: false }));
+      const cardsContainer = document.getElementById('cards');
+      const progressText = document.getElementById('progressText');
+      const progressFill = document.getElementById('progressFill');
+      const finishCard = document.getElementById('finishCard');
+      const finishPassword = document.getElementById('finishPassword');
+      const gotItCount = document.getElementById('gotItCount');
+      const questionCount = cards.filter((card) => card.type === 'Q').length;
+
+      function updateProgress() {
+        const completeCount = states.filter((state) => state.complete).length;
+        const gotItTotal = states.filter((state) => state.complete && state.gotIt).length;
+        progressText.textContent = `${completeCount} / ${cards.length} completed`;
+        progressFill.style.width = `${(completeCount / cards.length) * 100}%`;
+
+        if (completeCount === cards.length) {
+          gotItCount.textContent = `${gotItTotal} / ${questionCount} 맞았지롱`;
+          finishPassword.textContent = PASSWORD;
+          finishCard.hidden = false;
+        }
+      }
+
+      function markComplete(index, gotIt) {
+        states[index] = { complete: true, gotIt };
+        const cardElement = document.getElementById(`memory-${index}`);
+        cardElement.classList.add('is-complete');
+        cardElement.querySelectorAll('[data-choice]').forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.choice === String(gotIt)));
+        });
+        const nextButton = cardElement.querySelector('[data-next]');
+        if (nextButton) nextButton.disabled = true;
+        updateProgress();
+      }
+
+      cards.forEach((item, index) => {
+        const cardElement = document.createElement('article');
+        cardElement.className = 'quiz-card';
+        cardElement.id = `memory-${index}`;
+
+        const date = document.createElement('span');
+        date.className = 'date';
+        date.textContent = item.date;
+        cardElement.appendChild(date);
+
+        if (item.type === 'N') {
+          const note = document.createElement('p');
+          note.className = 'note-text';
+          note.textContent = item.question;
+          cardElement.appendChild(note);
+
+          const actions = document.createElement('div');
+          actions.className = 'card-actions';
+          const nextButton = document.createElement('button');
+          nextButton.type = 'button';
+          nextButton.className = 'quiz-button';
+          nextButton.dataset.next = '';
+          nextButton.textContent = 'Next';
+          nextButton.addEventListener('click', () => markComplete(index, false));
+          actions.appendChild(nextButton);
+          cardElement.appendChild(actions);
+
+          if (!debugMode && 'IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+              if (entries.some((entry) => entry.isIntersecting)) {
+                markComplete(index, false);
+                observer.disconnect();
+              }
+            }, { threshold: 0.35 });
+            observer.observe(cardElement);
+          }
+        } else {
+          const question = document.createElement('p');
+          question.className = 'question';
+          question.textContent = item.question;
+          cardElement.appendChild(question);
+
+          const answer = document.createElement('p');
+          answer.className = 'answer';
+          answer.hidden = !debugMode;
+          answer.textContent = item.answer || '(answer not added yet)';
+          cardElement.appendChild(answer);
+
+          const actions = document.createElement('div');
+          actions.className = 'card-actions';
+          const revealButton = document.createElement('button');
+          revealButton.type = 'button';
+          revealButton.className = 'quiz-button';
+          revealButton.textContent = 'Reveal answer';
+          revealButton.disabled = debugMode;
+          revealButton.addEventListener('click', () => {
+            answer.hidden = false;
+            selfCheck.hidden = false;
+            revealButton.disabled = true;
+          });
+          actions.appendChild(revealButton);
+          cardElement.appendChild(actions);
+
+          const selfCheck = document.createElement('div');
+          selfCheck.className = 'self-check';
+          selfCheck.hidden = !debugMode;
+          [
+            { label: '맞았지롱', gotIt: true },
+            { label: 'oopsiess', gotIt: false },
+          ].forEach(({ label, gotIt }) => {
+            const choiceButton = document.createElement('button');
+            choiceButton.type = 'button';
+            choiceButton.className = 'quiz-button';
+            choiceButton.dataset.choice = String(gotIt);
+            choiceButton.setAttribute('aria-pressed', 'false');
+            choiceButton.textContent = label;
+            choiceButton.addEventListener('click', () => markComplete(index, gotIt));
+            selfCheck.appendChild(choiceButton);
+          });
+          cardElement.appendChild(selfCheck);
+        }
+
+        cardsContainer.appendChild(cardElement);
+        if (debugMode) markComplete(index, item.type === 'Q');
+      });
+
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>
