@@ -16,7 +16,9 @@ Contains all the website pages organized by feature:
 - `imnotarobot.html` - Robot verification page
 
 #### Letter Pages and Games
-- `letter1.html` through `letter10.html` - Sequential letter pages and the Letter 10 wavelength game
+- `letter1.html` through `letter10.html` - Sequential unlocked letter pages
+- `wavelength.html` - Letter 10 Wavelength entry game
+- `letter-10-quiz.html` - Letter 10 memory quiz
 
 #### Quiz Pages
 - `composerQuiz.html` - Classical composer identification quiz
@@ -30,6 +32,8 @@ Contains all CSS files for styling the website pages.
 
 ### `/javascript/` - JavaScript Files
 Contains all JavaScript files for interactive functionality and quiz logic.
+
+Letter 10 uses `letter10.js` for the Wavelength game and a self-contained quiz script in `letter-10-quiz.html`.
 
 ### `/photos/` - Images
 Contains all image assets used throughout the website.
@@ -58,6 +62,21 @@ IDE-specific settings (can be ignored by other editors).
 - Text Guess questions follow a numbered sequence (question2-question11)
 - When adding new Text Guess questions, follow the naming pattern
 - Quiz logic is likely handled in JavaScript files - check `/javascript/` directory
+
+### Letter 10 Flow
+1. The home page opens `wavelength.html` through the Letter 10 link.
+2. Completing the Wavelength game continues to `letter-10-quiz.html`.
+3. Completing the quiz reveals the `jinny` access code.
+4. Entering `jinny` on the home page unlocks `letter10.html`.
+
+## Debug Shortcuts
+
+Letter pages and their associated tasks include a hidden debug shortcut:
+
+- macOS: `Cmd + Option + Shift + D`
+- Windows/Linux: `Ctrl + Alt + D`
+
+The shortcut opens a debug panel showing the access codes for the current page or task. On `home.html`, it shows the access codes for Letters 1–10.
 
 ## File Organization Best Practices
 - Keep HTML files in `/html/`
