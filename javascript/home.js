@@ -20,16 +20,19 @@
   }
 
   function updateAnniversaryText() {
+    const diffDays = utils.daysSince(START_DATE);
+    const daysTogether = document.getElementById("days-together");
+    if (daysTogether) daysTogether.textContent = diffDays;
+
     const text = document.getElementById("anniversary-text");
     if (!text) return;
-    const diffDays = utils.daysSince(START_DATE);
     text.innerHTML = `It's our ${diffDays} day anniversary!ㅋㅋㅋㅋㅋㅋㅋ<small class="caption">I'M SORRY I'M SO LATE I KNOW THIS TOOK WAY TOO LONG</small>`;
   }
 
   function init() {
+    updateAnniversaryText();
     if (!document.body.classList.contains("home-page")) return;
     initConfetti();
-    updateAnniversaryText();
     utils.initLetterAccess(document);
   }
 
